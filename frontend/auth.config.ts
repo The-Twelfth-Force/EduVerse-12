@@ -1,6 +1,8 @@
 import type { NextAuthConfig } from 'next-auth';
- 
-export const authConfig = {
+
+export const authConfig: NextAuthConfig = {
+  secret: process.env.NEXTAUTH_SECRET || 'fallback_secret_for_testing',  // Fallback to avoid errors
+
   pages: {
     signIn: '/login',
   },
@@ -17,5 +19,5 @@ export const authConfig = {
       return true;
     },
   },
-  providers: [], // Add providers with an empty array for now
+  providers: [],
 } satisfies NextAuthConfig;
