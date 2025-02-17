@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import styles from './SignInForm.module.css';
+import Dashboard from '../pages/Dashboard';
 
 const SignInForm = () => {
   const [email, setEmail] = useState('');
