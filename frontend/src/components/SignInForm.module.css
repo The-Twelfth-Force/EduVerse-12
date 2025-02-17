@@ -52,7 +52,7 @@
     margin-top: 2px;
     border: 2px solid green;
     border-radius: 4px;
-    align-items: start;
+    align-items: center;
   }
   
   .input:focus, .checkbox:focus {
@@ -62,13 +62,14 @@
   
   .checkboxGroup {
     display: flex; /* Using flexbox for better alignment control */
-    align-items: center; /* Vertically centers the checkbox with the label */
-    justify-content: start; /* Aligns the checkbox and label at the start of the container */
+    align-items: flex-start; /* Vertically centers the checkbox with the label */
+    justify-content: flex-start; /* Aligns the checkbox and label at the start of the container */
     margin-top: 10px;
   }
   
   .checkbox {
-    margin-right: 10px; /* Keeps some space between the checkbox and the label */
+    margin-right: 10px;
+    align-self: center; /* Keeps some space between the checkbox and the label */
   }
   
   
@@ -110,4 +111,3 @@
   .link:hover {
     text-decoration: underline;
   }
-  

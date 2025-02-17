@@ -40,7 +40,7 @@ const SignInForm = () => {
             required
           />
         </div>
-        <div className={styles.checkboxGroup}>
+        <div className={styles.checkboxGroup} style={{ display: 'flex', alignItems: 'center' }}>
           <input
             id="staySignedIn"
             type="checkbox"
@@ -48,7 +48,7 @@ const SignInForm = () => {
             onChange={(e) => setStaySignedIn(e.target.checked)}
             className={styles.checkbox}
           />
-          <label htmlFor="staySignedIn" className={styles.checkboxLabel}>Stay signed in</label>
+          <label htmlFor="staySignedIn" className={styles.checkboxLabel} style={{ marginLeft: '8px', whiteSpace: 'nowrap' }}>Stay signed in</label>
         </div>
         <button type="submit" className={styles.button}>Log In</button>
       </form>
