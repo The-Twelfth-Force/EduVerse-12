@@ -55,4 +55,14 @@ class User {
         $stmt = $db->getConnection()->prepare($query);
         return $stmt->execute([$this->firstName, $this->lastName, $this->email, $this->hash, $this->usertype, $this->NetID]);
     }
+    public function validate(string $email, string $hash) {
+        $db = new Database();
+        if ($db->getConnection() === null) {
+            die("db connection failed");
+        }
+        $query = "SELECT * FROM users WHERE email = ? AND hash = ?";
+        $stmt = $db->getConnection()->prepare($query);
+        return $stmt->execute([$email, $hash]);
+    }
+
 }
