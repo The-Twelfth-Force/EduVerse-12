@@ -1,9 +1,11 @@
 'use client'
 
-import { SignedIn, UserButton, useUser} from "@clerk/nextjs";
+import { useUser} from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const { isLoaded, user, isSignedIn } = useUser();
+  const Router = useRouter();
   if (!isLoaded) {
     return <p>Loading...</p>
   }
@@ -22,16 +24,10 @@ export default function Home() {
 
   const userType = user.publicMetadata.userType;
   console.log(user.publicMetadata);
-
-  return (
-    <div>
-      <h1>Home</h1>
-      <p>Welcome to the home page!</p>
-      <SignedIn>
-        <UserButton />
-        <p>You are signed in!</p>
-        <p>you are a(n) {userType === 'stu' ? 'student' : 'instructor'}</p>
-      </SignedIn>
-    </div>
-  );
+  if (userType === "stu") {
+    Router.push("/student");
+  }
+  if (userType === "inst") { 
+    Router.push("/instructor");
+  }
 }
