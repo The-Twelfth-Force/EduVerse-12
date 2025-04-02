@@ -21,4 +21,12 @@ class Database {
         }
         return $this->conn;
     }
+    public function query($sql, $params = []) {
+        $stmt = $this->conn->prepare($sql);
+        foreach ($params as $key => $value) {
+            $stmt->bindValue($key, $value);
+        }
+        $stmt->execute();
+        return $stmt;
+    }
 }
