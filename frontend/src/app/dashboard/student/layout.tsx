@@ -1,8 +1,12 @@
+"use client"
+import { useUser, UserButton } from "@clerk/nextjs";
+
 export default function StudentLayout({
     children,
 }: {
     children: React.ReactNode
 }) {
+    const { isSignedIn, user, isLoaded } = useUser();
     const navLinks = [
         { name: 'Home', href: '/dashboard/student' },
         { name: 'My Courses', href: '/dashboard/student/courses' },
@@ -28,6 +32,7 @@ export default function StudentLayout({
                         ))}
                     </ul>
                 </nav>
+                <UserButton/>
             </div>
             {children}
         </div>

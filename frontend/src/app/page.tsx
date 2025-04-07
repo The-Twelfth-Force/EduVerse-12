@@ -1,6 +1,6 @@
 'use client'
 
-import { useUser} from "@clerk/nextjs";
+import { SignOutButton, useUser} from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
@@ -22,12 +22,22 @@ export default function Home() {
     );
   }
 
-  const userType = user.publicMetadata.userType;
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen p-4">
+      <h1 className="text-2xl font-bold">Home</h1>
+      <div className='flex flex-row items-center justify-center space-x-3'>
+        <p className="mt-4 justify-center">Welcome, {user?.firstName}!</p>
+        <SignOutButton />
+      </div>
+    </div>
+  );
+
+  /* const userType = user.publicMetadata.userType;
   console.log(user.publicMetadata);
   if (userType === "stu") {
     Router.push("/student");
   }
   if (userType === "inst") { 
     Router.push("/instructor");
-  }
+  } */
 }
