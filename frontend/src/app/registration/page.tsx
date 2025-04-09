@@ -5,7 +5,8 @@ import { CourseSection } from '@/types/course'
 import { DataTable } from "@/components/DataTable"
 import { Checkbox } from "@/components/ui/checkbox"
 import { CheckedState } from "@radix-ui/react-checkbox"
-import CollegeScheduleCalendar from "@/components/Planner/CollegeScheduleCalendar"
+import ScheduleCalendar from "@/components/Planner/ScheduleCalendar"
+import { Button } from "@/components/ui/button"
 
 export default function Registration() {
   const [selectedSections, setSelectedSections] = useState<CourseSection[]>([])
@@ -31,34 +32,51 @@ export default function Registration() {
     {
       _id: "2",
       prefix: "CS",
-      number: "101",
+      number: "102",
       section_number: "002",
       profFirst: "Jane",
       profLast: "Smith",
       meetings: [{
           meeting_days: ["Tuesday", "Thursday"],
           start_time: "11:00 AM",
-          end_time: "12:15 PM",
+          end_time: "12:30 PM",
           location: {
-            building: "Science Hall",
-            room: "102"
+            building: "Engineering Hall",
+            room: "202"
           }
         }],
     },
     {
       _id: "3",
       prefix: "CS",
-      number: "101",
+      number: "103",
       section_number: "003",
       profFirst: "Alice",
       profLast: "Johnson",
       meetings: [{
           meeting_days: ["Friday"],
           start_time: "01:00 PM",
-          end_time: "02:30 PM", 
+          end_time: "02:30 PM",
           location: {
-            building: "Science Hall",
-            room: "103"
+            building: "Math Hall",
+            room: "303"
+          }
+        }],
+    },
+    {
+      _id: "4",
+      prefix: "CS",
+      number: "104",
+      section_number: "004",
+      profFirst: "Bob",
+      profLast: "Brown",
+      meetings: [{
+          meeting_days: ["Monday", "Wednesday"],
+          start_time: "03:00 PM",
+          end_time: "04:30 PM",
+          location: {
+            building: "Arts Hall",
+            room: "404"
           }
         }],
     },
@@ -134,8 +152,6 @@ export default function Registration() {
     },
   ]
 
-
-
   function handleRowSelectionChange(rowSelection: Row<CourseSection>, value: CheckedState) {
     rowSelection.toggleSelected(!!value)
     if (value) {
@@ -159,11 +175,16 @@ export default function Registration() {
 
   return (
     <div className="flex max-h-screen space-x-4 p-4">
-      <div className="flex max-w-1/2 shadow rounded-md">
-        <DataTable columns={columns(handleRowSelectionChange)} data={courseSections}/>
+      <div className="flex flex-col w-fit shadow rounded-md justify-between">
+        <div className="p-2 max-h-full overflow-scroll">
+          <DataTable columns={columns(handleRowSelectionChange)} data={courseSections}/>
+        </div>
+        <Button className="sticky w-auto m-2" onClick={() => console.log(formattedSections)} disabled={selectedSections.length === 0}>
+          Register
+        </Button>
       </div>
-      <div className="flex border-gray-200 border-[1px] rounded-md w-fit overflow-clip shadow-lg">
-        <CollegeScheduleCalendar courses={selectedSections}></CollegeScheduleCalendar>
+      <div className="relative border-gray-200 border-[1px] rounded-md w-full overflow-clip shadow-md">
+        <ScheduleCalendar courses={selectedSections}></ScheduleCalendar>
       </div>
     </div>
   )

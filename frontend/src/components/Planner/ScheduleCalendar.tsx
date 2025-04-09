@@ -1,17 +1,16 @@
 import { useState, useEffect, useCallback } from 'react';
 import { CourseSection } from '@/types/course';
 
-interface CollegeScheduleCalendarProps {
+interface ScheduleCalendarProps {
   courses?: CourseSection[];
   title?: string;
   highlightToday?: boolean;
 }
 
-export default function CollegeScheduleCalendar({ 
+export default function ScheduleCalendar({ 
   courses = [], 
-  title = "Schedule",
   highlightToday = true
-}: CollegeScheduleCalendarProps) {
+}: ScheduleCalendarProps) {
   const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   const todayIndex = new Date().getDay()
   
@@ -110,10 +109,6 @@ export default function CollegeScheduleCalendar({
 
   return (
     <div className="flex flex-col h-screen bg-gray-50">
-      <div className="p-4 bg-white shadow">
-        <h1 className="text-2xl font-bold text-gray-800">{title}</h1>
-      </div>
-      
       {/* Calendar Header */}
       <div className="grid grid-cols-8 gap-1 p-2 bg-white border-b">
         <div className="p-2 font-bold text-gray-600">Time</div>
