@@ -78,27 +78,79 @@ export default function Home() {
     );
   }
 
-  // Signed in
-  return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gradient-to-r from-[#d1f4f9] via-[#e1e9ff] to-[#f0e4ff]">
-      <h1 className="text-3xl font-bold text-gray-800">EduVerse-12</h1>
-      <div className="flex flex-row items-center justify-center space-x-3 mt-4">
-        <p className="text-lg text-gray-700">Welcome, {user?.firstName}!</p>
-        <UserButton />
-      </div>
-      <p className="mt-4 text-gray-700">Go to:</p>
-      <div className="flex items-center justify-center space-x-4 mt-2">
-        <Button onClick={() => Router.push('/registration')}>Registration</Button>
-        <Button
-          onClick={() =>
-            userType === 'stu'
-              ? Router.push('/dashboard/student')
-              : Router.push('/dashboard/instructor')
-          }
-        >
-          Dashboard →
-        </Button>
-      </div>
+   // Signed-in layout
+   return (
+    <div className="min-h-screen w-full bg-gradient-to-r from-[#d1f4f9] via-[#e1e9ff] to-[#f0e4ff] flex flex-col">
+      {/* Top-left "logo"-style title */}
+      <header className="p-4">
+      <h1 className="text-2xl font-bold italic text-gray-800 uppercase tracking-wider pl-10">
+      EduVerse-12
+        </h1>
+      </header>
+
+      {/* Main Profile Section: raised up */}
+      <main className="flex flex-col items-center justify-start mt-20">
+        {/* Large circular UserButton */}
+        <div className="rounded-full w-36 h-36 bg-gradient-to-r from-[#d28efc] to-[#9ed8fe] shadow-xl backdrop-blur-sm flex items-center justify-center">
+        <UserButton
+          appearance={{
+            elements: {
+              // Adjust these or check Clerk docs for the exact sub-elements you can override
+              userButtonAvatarBox: "w-32 h-32",
+              userButtonTrigger: "w-32 h-32",
+            },
+          }}
+        />
+        </div>
+
+        <p className="mt-4 text-xl leading-tight tracking-wide text-gray-900">
+          <span className="font-normal">Welcome back, </span>
+          <span className="font-bold">Mohammad</span>
+        </p>
+
+
+
+        {/* Two big "glass effect" boxes */}
+        <div className="mt-20 w-full max-w-6xl px-6 flex flex-row items-center justify-evenly">
+          {/* Registration Box */}
+          <div
+            className="group relative w-2/5 max-w-sm bg-white/30 backdrop-blur-md shadow-lg p-6 rounded-xl flex flex-col items-center cursor-pointer hover:scale-105 transition-transform"
+            onClick={() => Router.push('/registration')}
+          >
+            <Image
+              src="/images/register.png"
+              alt="Registration"
+              width={700}
+              height={500}
+              className="rounded-md"
+            />
+            <span className="mt-4 text-2xl font-semibold text-gray-800">
+              Registration
+            </span>
+          </div>
+
+          {/* Dashboard Box */}
+          <div
+            className="group relative w-2/5 max-w-sm bg-white/30 backdrop-blur-md shadow-lg p-6 rounded-xl flex flex-col items-center cursor-pointer hover:scale-105 transition-transform"
+            onClick={() =>
+              userType === 'stu'
+                ? Router.push('/dashboard/student')
+                : Router.push('/dashboard/instructor')
+            }
+          >
+            <Image
+              src="/images/dashboard.png"
+              alt="Dashboard"
+              width={400}
+              height={300}
+              className="rounded-md"
+            />
+            <span className="mt-4 text-2xl font-semibold text-gray-800">
+              Dashboard
+            </span>
+          </div>
+        </div>
+      </main>
     </div>
   );
 }
