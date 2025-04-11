@@ -6,7 +6,11 @@ export default function StudentDash() {
     const { isSignedIn, user, isLoaded } = useUser();
     const Router = useRouter();
     if (!isLoaded || !user) {
-        return <p>Loading...</p>
+        return (
+            <div className="flex flex-col items-center justify-center min-h-screen p-4">
+                <h1 className="text-2xl font-bold">Loading...</h1>
+            </div>
+        )
     }
     if (!isSignedIn) {
         Router.push('/sign-in')

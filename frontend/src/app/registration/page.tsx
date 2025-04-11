@@ -174,7 +174,7 @@ export default function Registration() {
   }
 
   return (
-    <div className="flex max-h-screen space-x-4 p-4">
+    <div className="flex h-full space-x-4 p-4">
       <div className="flex flex-col w-fit shadow rounded-md justify-between">
         <div className="p-2 max-h-full overflow-scroll">
           <DataTable columns={columns(handleRowSelectionChange)} data={courseSections}/>

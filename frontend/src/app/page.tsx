@@ -5,10 +5,16 @@ import { UserButton, useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
-  const { isLoaded, user, isSignedIn } = useUser();
   const Router = useRouter();
+  const { isLoaded, user, isSignedIn } = useUser();
+  const userType = user?.publicMetadata.userType;
+
   if (!isLoaded) {
-    return <p>Loading...</p>
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen p-4">
+                <h1 className="text-2xl font-bold">Loading...</h1>
+            </div>
+    )
   }
   if (!isSignedIn) {
     return (
@@ -33,17 +39,8 @@ export default function Home() {
       <p className="mt-4">Go to:</p>
       <div className="flex items-center justify-center space-x-2">
         <Button onClick={() => Router.push("/registration")}>Registration</Button>
-        <Button onClick={() => Router.push("/dashboard")}>Dashboard</Button>
+        <Button onClick={() => userType === 'stu' ? Router.push("/dashboard/student") : Router.push("/dashboard/instructor")}>Dashboard</Button>
       </div>
     </div>
   );
-
-  /* const userType = user.publicMetadata.userType;
-  console.log(user.publicMetadata);
-  if (userType === "stu") {
-    Router.push("/student");
-  }
-  if (userType === "inst") { 
-    Router.push("/instructor");
-  } */
 }

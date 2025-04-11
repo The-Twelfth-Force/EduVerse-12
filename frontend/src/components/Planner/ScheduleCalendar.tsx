@@ -115,7 +115,7 @@ export default function ScheduleCalendar({
         {daysOfWeek.map((day, index) => (
           <div 
             key={index} 
-            className={`p-2 font-bold text-center rounded ${
+            className={`p-2 font-bold text-sm text-center rounded ${
               highlightToday && index === todayIndex 
                 ? 'bg-blue-100 text-blue-800' 
                 : 'bg-gray-100 text-gray-800'
