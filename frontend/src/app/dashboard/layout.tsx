@@ -1,8 +1,7 @@
 'use client';
 
-//import {SignedOut} from "@clerk/nextjs";
 import { useUser, UserButton } from '@clerk/nextjs';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import {
   LayoutDashboard,
   BookOpen,
@@ -11,23 +10,31 @@ import {
   Clock,
   HelpCircle,
   ArrowLeftCircle,
+  ClipboardList,
 } from 'lucide-react';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
+  const pathname = usePathname();
   const { user } = useUser();
   const userName = user?.firstName || 'Guest';
+
+  // This helper function returns the appropriate classes for a nav button.
+  const getButtonClasses = (targetPath: string) => {
+    const isActive = pathname === targetPath;
+    return `w-full flex flex-col items-center p-2 rounded transition-colors ${isActive ? "bg-teal-200 text-gray-900" : "hover:bg-teal-200 hover:text-gray-900"}`;
+  };
 
   return (
     <div className="flex h-screen">
       {/* Left Sidebar */}
       <aside className="w-22 bg-gray-900 text-white flex flex-col items-center">
-        {/* Profile Section as a clickable nav element */}
+        {/* Profile Section (clickable nav element linking to profile) */}
         <button
-          //onClick={() => router.push('/profile')}
+          onClick={() => router.push('/profile')}
           className="pt-8 pb-4 flex flex-col items-center focus:outline-none"
         >
-          <div className="rounded-full bg-white/100 p-2 w-9 h-9 flex items-center justify-center">
+          <div className="rounded-full bg-white p-2 w-9 h-9 flex items-center justify-center">
             <UserButton
               appearance={{
                 elements: {
@@ -45,7 +52,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           <li>
             <button
               onClick={() => router.push('/dashboard')}
-              className="w-full flex flex-col items-center p-2 rounded hover:bg-teal-200 hover:text-gray-900 transition-colors"
+              className={getButtonClasses('/dashboard')}
             >
               <LayoutDashboard size={30} />
               <span className="mt-1 text-xs font-light">Dashboard</span>
@@ -54,7 +61,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           <li>
             <button
               onClick={() => router.push('/dashboard/courses')}
-              className="w-full flex flex-col items-center p-2 rounded hover:bg-teal-200 hover:text-gray-900 transition-colors"
+              className={getButtonClasses('/dashboard/courses')}
             >
               <BookOpen size={30} />
               <span className="mt-1 text-xs font-light">Courses</span>
@@ -63,7 +70,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           <li>
             <button
               onClick={() => router.push('/dashboard/calendar')}
-              className="w-full flex flex-col items-center p-2 rounded hover:bg-teal-200 hover:text-gray-900 transition-colors"
+              className={getButtonClasses('/dashboard/calendar')}
             >
               <CalendarDays size={30} />
               <span className="mt-1 text-xs font-light">Calendar</span>
@@ -71,8 +78,17 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           </li>
           <li>
             <button
+              onClick={() => router.push('/dashboard/grades')}
+              className={getButtonClasses('/dashboard/grades')}
+            >
+              <ClipboardList size={30} />
+              <span className="mt-1 text-xs font-light">Grades</span>
+            </button>
+          </li>
+          <li>
+            <button
               onClick={() => router.push('/dashboard/inbox')}
-              className="w-full flex flex-col items-center p-2 rounded hover:bg-teal-200 hover:text-gray-900 transition-colors"
+              className={getButtonClasses('/dashboard/inbox')}
             >
               <Inbox size={30} />
               <span className="mt-1 text-xs font-light">Inbox</span>
@@ -81,7 +97,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           <li>
             <button
               onClick={() => router.push('/dashboard/history')}
-              className="w-full flex flex-col items-center p-2 rounded hover:bg-teal-200 hover:text-gray-900 transition-colors"
+              className={getButtonClasses('/dashboard/history')}
             >
               <Clock size={30} />
               <span className="mt-1 text-xs font-light">History</span>
@@ -90,7 +106,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           <li>
             <button
               onClick={() => router.push('/dashboard/help')}
-              className="w-full flex flex-col items-center p-2 rounded hover:bg-teal-200 hover:text-gray-900 transition-colors"
+              className={getButtonClasses('/dashboard/help')}
             >
               <HelpCircle size={30} />
               <span className="mt-1 text-xs font-light">Help</span>
@@ -98,13 +114,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           </li>
         </ul>
 
-        
-
-        {/* Back Button at Bottom */}
+        {/* Sign Out / Back Button at Bottom */}
         <div className="mt-auto p-2 w-full">
           <button
             onClick={() => router.push('/')}
-            className="w-full flex flex-col items-center p-2 rounded hover:bg-teal-200 hover:text-gray-900 transition-colors"
+            className={getButtonClasses('/')}
           >
             <ArrowLeftCircle size={30} />
             <span className="mt-1 text-xs font-light">Back</span>
