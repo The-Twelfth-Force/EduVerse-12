@@ -1,5 +1,6 @@
 'use client';
 
+//import {SignedOut} from "@clerk/nextjs";
 import { useUser, UserButton } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
 import {
@@ -96,6 +97,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             </button>
           </li>
         </ul>
+
+        
 
         {/* Back Button at Bottom */}
         <div className="mt-auto p-2 w-full">
