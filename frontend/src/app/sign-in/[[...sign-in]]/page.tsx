@@ -12,7 +12,7 @@ export default function SignInPage() {
           <SignIn.Root>
             <SignIn.Step
               name="start"
-              className="w-full space-y-6 rounded-2xl bg-neutral-900 bg-[radial-gradient(circle_at_50%_0%,theme(colors.white/10%),transparent)] px-4 py-10 ring-1 ring-inset ring-white/5 sm:w-96 sm:px-8"
+              className="w-full max-w-sm mx-auto space-y-6 rounded-2xl bg-neutral-900 bg-[radial-gradient(circle_at_50%_0%,theme(colors.white/10%),transparent)] px-4 py-10 ring-1 ring-inset ring-white/5 sm:w-96 sm:px-8"
             >
               <header className="text-center">
                 <h1 className="mt-4 text-xl font-medium tracking-tight text-white">
@@ -35,7 +35,7 @@ export default function SignInPage() {
                   <Clerk.Input
                     type="password"
                     required
-                    className="w-full rounded-md bg-neutral-900 px-3.5 py-2 text-sm text-white outline-none ring-1 ring-inset ring-zinc-700 hover:ring-zinc-600 focus:ring-[1.5px] focus:ring-blue-400"
+                    className="w-full rounded-md bg-neutral-900 px-3.5 == py-2 text-sm text-white outline-none ring-1 ring-inset ring-zinc-700 hover:ring-zinc-600 focus:ring-[1.5px] focus:ring-blue-400"
                   />
                   <Clerk.FieldError className="block text-sm text-red-400" />
                 </Clerk.Field>
