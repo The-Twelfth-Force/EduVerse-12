@@ -184,6 +184,59 @@ export default function Registration() {
 
   return (
     <div className="flex flex-col h-full space-y-4 p-4">
+      {/* Filter Summary Section */}
+<div className="grid grid-cols-1 md:grid-cols-2 gap-4 border border-gray-200 rounded-md p-4 shadow-sm mb-4">
+  {/* Row 1 */}
+  <div className="flex items-center justify-between">
+    <div>
+      <span className="font-semibold text-sm">Course Status</span>
+      <div className="text-sm text-gray-700">Open Classes Only</div>
+    </div>
+    <Button variant="outline" className="text-sm px-3 py-1">Change</Button>
+  </div>
+  <div className="flex items-center justify-between">
+    <div>
+      <span className="font-semibold text-sm">Term</span>
+      <div className="text-sm text-gray-700">2025 Fall</div>
+    </div>
+    <Button variant="outline" className="text-sm px-3 py-1">Change</Button>
+  </div>
+
+  {/* Row 2 */}
+  <div className="flex items-center justify-between">
+    <div>
+      <span className="font-semibold text-sm">Locations</span>
+      <div className="text-sm text-gray-700">1 of 27 Selected</div>
+    </div>
+    <Button variant="outline" className="text-sm px-3 py-1">Change</Button>
+  </div>
+  <div className="flex items-center justify-between">
+    <div>
+      <span className="font-semibold text-sm">Sessions</span>
+      <div className="text-sm text-gray-700">All Sessions Selected</div>
+    </div>
+    <Button variant="outline" className="text-sm px-3 py-1">Change</Button>
+  </div>
+
+  {/* Row 3 */}
+  <div className="flex items-center justify-between">
+    <div>
+      <span className="font-semibold text-sm">Academic Careers</span>
+      <div className="text-sm text-gray-700">All Academic Careers Selected</div>
+    </div>
+    <Button variant="outline" className="text-sm px-3 py-1">Change</Button>
+  </div>
+  <div className="flex items-center justify-between">
+    <div>
+      <span className="font-semibold text-sm">Instruction Modes</span>
+      <div className="text-sm text-gray-700">All Instruction Modes Selected</div>
+    </div>
+    <Button variant="outline" className="text-sm px-3 py-1">Change</Button>
+  </div>
+</div>
+
+
+
       {/* Upper Section: Data Table with Add To Cart Button */}
       <div className="flex flex-col w-full shadow rounded-md">
         <div className="p-2 max-h-full overflow-scroll">
