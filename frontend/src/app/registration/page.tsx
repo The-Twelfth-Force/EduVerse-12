@@ -179,8 +179,11 @@ export default function Registration() {
         <div className="p-2 max-h-full overflow-scroll">
           <DataTable columns={columns(handleRowSelectionChange)} data={courseSections}/>
         </div>
-        <Button className="sticky w-auto m-2" onClick={() => console.log(formattedSections)} disabled={selectedSections.length === 0}>
-          Register
+        <Button className="sticky w-auto m-2" onClick={() => {
+            console.log(formattedSections) 
+            localStorage.setItem('selectedSections', JSON.stringify(selectedSections))
+          }} disabled={selectedSections.length === 0}>
+          Add To Cart
         </Button>
       </div>
       <div className="relative border-gray-200 border-[1px] rounded-md w-full overflow-clip shadow-md">

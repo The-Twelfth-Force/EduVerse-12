@@ -28,6 +28,7 @@
     "react-dom": "^18.3.1",
     "tailwind-merge": "^3.0.1",
     "tailwindcss-animate": "^1.0.7",
+    "toast": "^0.5.4",
     "zod": "^3.24.1"
   },
   "devDependencies": {
@@ -42,8 +43,6 @@
     "typescript": "^5"
   },
   "overrides": {
-  "@clerk/shared": "3.6.0"
+    "@clerk/shared": "3.6.0"
   }
-  
-
 }
