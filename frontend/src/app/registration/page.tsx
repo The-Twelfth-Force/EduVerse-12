@@ -8,6 +8,9 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { CheckedState } from "@radix-ui/react-checkbox";
 import ScheduleCalendar from "@/components/Planner/ScheduleCalendar";
 import { Button } from "@/components/ui/button";
+import { useRouter } from 'next/navigation';
+import { Router } from "lucide-react";
+import router from "next/dist/client/router";
 
 export default function Registration() {
   const [selectedSections, setSelectedSections] = useState<CourseSection[]>([]);
@@ -183,6 +186,13 @@ export default function Registration() {
   };
 
   return (
+  <div>
+    <div className="flex items-center justify-between w-full px-4 py-2 border-b border-gray-200">
+      <h1 className="text-xl font-semibold">Courses</h1>
+      <Button onClick={() => router.push('/registration/search')}
+      >Add Course</Button>
+    </div>
+  
     <div className="flex flex-col h-full space-y-4 p-4">
       {/* Filter Summary Section */}
 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 border border-gray-200 rounded-md p-4 shadow-sm mb-4">
@@ -292,6 +302,7 @@ export default function Registration() {
           <ScheduleCalendar courses={selectedSections} year={year} />
         </div>
       </div>
+    </div>
     </div>
   );
 }
