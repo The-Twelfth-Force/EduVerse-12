@@ -31,7 +31,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       <aside className="w-22 bg-gray-900 text-white flex flex-col items-center">
         {/* Profile Section (clickable nav element linking to profile) */}
         <button
-          onClick={() => router.push('/profile')}
+          //onClick={() => router.push('/dashboard/account')}
           className="pt-8 pb-4 flex flex-col items-center focus:outline-none"
         >
           <div className="rounded-full bg-white p-2 w-9 h-9 flex items-center justify-center">

@@ -135,7 +135,8 @@ export default function Home() {
             onClick={() =>
               userType === 'stu'
                 ? Router.push('/dashboard/student')
-                : Router.push('/dashboard/instructor')
+                //I placed the dahsboard as the navigation push for the dashboard tab.
+                : Router.push('/dashboard')
             }
           >
             <Image
