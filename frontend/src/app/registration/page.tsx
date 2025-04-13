@@ -9,8 +9,6 @@ import { CheckedState } from "@radix-ui/react-checkbox";
 import ScheduleCalendar from "@/components/Planner/ScheduleCalendar";
 import { Button } from "@/components/ui/button";
 import { useRouter } from 'next/navigation';
-import { Router } from "lucide-react";
-import router from "next/dist/client/router";
 
 export default function Registration() {
   const [selectedSections, setSelectedSections] = useState<CourseSection[]>([]);
@@ -188,11 +186,6 @@ export default function Registration() {
 
   return (
   <div>
-    <div className="flex items-center justify-between w-full px-4 py-2 border-b border-gray-200">
-      <h1 className="text-xl font-semibold">Courses</h1>
-      <Button onClick={() => router.push('/registration/search')}
-      >Add Course</Button>
-    </div>
   
     <div className="flex flex-col h-full space-y-4 p-4">
       {/* Filter Summary Section */}
@@ -246,7 +239,11 @@ export default function Registration() {
   </div>
 </div>
 
-
+    <div className="flex items-center justify-between w-full px-4 py-2 border-b border-gray-200">
+      <h1 className="text-xl font-semibold">Courses</h1>
+      <Button onClick={() => router.push('/registration/search')}
+      >Add Course</Button>
+    </div>
 
       {/* Upper Section: Data Table with Add To Cart Button */}
       <div className="flex flex-col w-full shadow rounded-md">
