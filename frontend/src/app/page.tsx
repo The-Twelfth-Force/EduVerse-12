@@ -115,7 +115,7 @@ export default function Home() {
           {/* Registration Box */}
           <div
             className="group relative w-2/5 max-w-sm bg-white/30 backdrop-blur-md shadow-lg p-6 rounded-xl flex flex-col items-center cursor-pointer hover:scale-105 transition-transform"
-            onClick={() => Router.push('/registration')}
+            onClick={() => Router.push('/registration/semester')}
           >
             <Image
               src="/images/register.png"

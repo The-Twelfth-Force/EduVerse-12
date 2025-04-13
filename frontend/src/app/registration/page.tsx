@@ -1,15 +1,17 @@
-'use client'
-import { useState } from "react"
-import { ColumnDef, Row } from "@tanstack/react-table"
-import { CourseSection } from '@/types/course'
-import { DataTable } from "@/components/DataTable"
-import { Checkbox } from "@/components/ui/checkbox"
-import { CheckedState } from "@radix-ui/react-checkbox"
-import ScheduleCalendar from "@/components/Planner/ScheduleCalendar"
-import { Button } from "@/components/ui/button"
+"use client";
+
+import { useState } from "react";
+import { ColumnDef, Row } from "@tanstack/react-table";
+import { CourseSection } from "@/types/course";
+import { DataTable } from "@/components/DataTable";
+import { Checkbox } from "@/components/ui/checkbox";
+import { CheckedState } from "@radix-ui/react-checkbox";
+import ScheduleCalendar from "@/components/Planner/ScheduleCalendar";
+import { Button } from "@/components/ui/button";
 
 export default function Registration() {
-  const [selectedSections, setSelectedSections] = useState<CourseSection[]>([])
+  const [selectedSections, setSelectedSections] = useState<CourseSection[]>([]);
+  const [year, setYear] = useState<number>(new Date().getFullYear());
 
   const courseSections: CourseSection[] = [
     {
@@ -19,15 +21,17 @@ export default function Registration() {
       section_number: "001",
       profFirst: "John",
       profLast: "Doe",
-      meetings: [{
+      meetings: [
+        {
           meeting_days: ["Monday", "Wednesday"],
           start_time: "09:00 AM",
           end_time: "10:30 AM",
           location: {
             building: "Science Hall",
-            room: "101"
-          }
-        }],
+            room: "101",
+          },
+        },
+      ],
     },
     {
       _id: "2",
@@ -36,15 +40,17 @@ export default function Registration() {
       section_number: "002",
       profFirst: "Jane",
       profLast: "Smith",
-      meetings: [{
+      meetings: [
+        {
           meeting_days: ["Tuesday", "Thursday"],
           start_time: "11:00 AM",
           end_time: "12:30 PM",
           location: {
             building: "Engineering Hall",
-            room: "202"
-          }
-        }],
+            room: "202",
+          },
+        },
+      ],
     },
     {
       _id: "3",
@@ -53,15 +59,17 @@ export default function Registration() {
       section_number: "003",
       profFirst: "Alice",
       profLast: "Johnson",
-      meetings: [{
+      meetings: [
+        {
           meeting_days: ["Friday"],
           start_time: "01:00 PM",
           end_time: "02:30 PM",
           location: {
             building: "Math Hall",
-            room: "303"
-          }
-        }],
+            room: "303",
+          },
+        },
+      ],
     },
     {
       _id: "4",
@@ -70,17 +78,21 @@ export default function Registration() {
       section_number: "004",
       profFirst: "Bob",
       profLast: "Brown",
-      meetings: [{
+      meetings: [
+        {
           meeting_days: ["Monday", "Wednesday"],
           start_time: "03:00 PM",
           end_time: "04:30 PM",
           location: {
             building: "Arts Hall",
-            room: "404"
-          }
-        }],
+            room: "404",
+          },
+        },
+      ],
     },
-  ]
+  ];
+
+  
 
   const columns = (handleRowSelectionChange: (rowSelection: Row<CourseSection>, value: CheckedState) => void): ColumnDef<CourseSection>[] => [
     {
@@ -111,8 +123,8 @@ export default function Registration() {
       ),
     },
     {
-      accessorKey: 'Course',
-      header: 'Professor',
+      accessorKey: "Course",
+      header: "Professor",
       cell: ({ row }) => (
         <div>
           {row.original.prefix} {row.original.number} {row.original.profFirst} {row.original.profLast}
@@ -120,75 +132,113 @@ export default function Registration() {
       ),
     },
     {
-      accessorKey: 'section_number',
-      header: 'Section Number',
+      accessorKey: "section_number",
+      header: "Section Number",
     },
     {
-      accessorKey: 'meetings',
-      header: 'Meeting Days',
-      cell: ({ row }) => (
-        <div>
-          {row.original.meetings[0]?.meeting_days.join(', ')}
-        </div>
-      ),
+      accessorKey: "meetings",
+      header: "Meeting Days",
+      cell: ({ row }) => <div>{row.original.meetings[0]?.meeting_days.join(", ")}</div>,
     },
     {
-      accessorKey: 'startTime',
-      header: 'Start Time',
-      cell: ({ row }) => (
-        <div>
-          {row.original.meetings[0]?.start_time}
-        </div>
-      ),
+      accessorKey: "startTime",
+      header: "Start Time",
+      cell: ({ row }) => <div>{row.original.meetings[0]?.start_time}</div>,
     },
     {
-      accessorKey: 'endTime',
-      header: 'End Time',
-      cell: ({ row }) => (
-        <div>
-          {row.original.meetings[0]?.end_time}
-        </div>
-      ),
+      accessorKey: "endTime",
+      header: "End Time",
+      cell: ({ row }) => <div>{row.original.meetings[0]?.end_time}</div>,
     },
-  ]
+  ];
 
   function handleRowSelectionChange(rowSelection: Row<CourseSection>, value: CheckedState) {
-    rowSelection.toggleSelected(!!value)
+    rowSelection.toggleSelected(!!value);
     if (value) {
-      setSelectedSections((prev) => [...prev, rowSelection.original])
-    } else if (!value) {
-      setSelectedSections((prev) => prev.filter((section) => section._id !== rowSelection.original._id))
+      setSelectedSections((prev) => [...prev, rowSelection.original]);
+    } else {
+      setSelectedSections((prev) => prev.filter((section) => section._id !== rowSelection.original._id));
     }
-    console.log("Selected Sections: ", selectedSections)
-    console.log("Selected Courses: ", formattedSections)
+    console.log("Selected Sections: ", selectedSections);
   }
 
-  // Transform selectedSections into the expected format
+  // Dummy transformation for selectedSections (for localStorage)
   const formattedSections = {
     selected: {
       state: "selected",
       data: {
-        latest: selectedSections
-      }
-    }
-  }
+        latest: selectedSections,
+      },
+    },
+  };
+
+  // Handle year selection change for the calendar section
+  const handleYearChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setYear(Number(e.target.value));
+  };
+
+  // Dummy handler for "Add Event" button – in a real app, you could open a dialog/modal
+  const handleAddEventButton = () => {
+    alert("Add Event functionality triggered.");
+  };
 
   return (
-    <div className="flex h-full space-x-4 p-4">
-      <div className="flex flex-col w-fit shadow rounded-md justify-between">
+    <div className="flex flex-col h-full space-y-4 p-4">
+      {/* Upper Section: Data Table with Add To Cart Button */}
+      <div className="flex flex-col w-full shadow rounded-md">
         <div className="p-2 max-h-full overflow-scroll">
-          <DataTable columns={columns(handleRowSelectionChange)} data={courseSections}/>
+          <DataTable columns={columns(handleRowSelectionChange)} data={courseSections} />
         </div>
-        <Button className="sticky w-auto m-2" onClick={() => {
-            console.log(formattedSections) 
-            localStorage.setItem('selectedSections', JSON.stringify(selectedSections))
-          }} disabled={selectedSections.length === 0}>
+        <Button
+          className="sticky w-auto m-2"
+          onClick={() => {
+            console.log(formattedSections);
+            localStorage.setItem("selectedSections", JSON.stringify(selectedSections));
+          }}
+          disabled={selectedSections.length === 0}
+        >
           Add To Cart
         </Button>
       </div>
-      <div className="relative border-gray-200 border-[1px] rounded-md w-full overflow-clip shadow-md">
-        <ScheduleCalendar courses={selectedSections}></ScheduleCalendar>
+
+      {/* Lower Section: Calendar */}
+      <div className="relative border border-gray-200 rounded-md w-full overflow-hidden shadow-md">
+        {/* Calendar Header with Controls */}
+        <div className="p-4 flex flex-col md:flex-row md:items-center md:justify-between bg-gray-900 text-white">
+          <div className="flex space-x-4 mb-4 md:mb-0">
+            <Button
+              onClick={handleAddEventButton}
+              className="px-4 py-2 rounded bg-gray-900 text-white hover:bg-teal-200 hover:text-gray-900 transition-colors"
+            >
+              Add Event
+            </Button>
+          </div>
+          <div className="flex items-center space-x-2">
+            <label htmlFor="year" className="text-sm">
+              Year:
+            </label>
+            <select
+              id="year"
+              value={year}
+              onChange={handleYearChange}
+              className="px-2 py-1 rounded bg-gray-900 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-200"
+            >
+              {Array.from({ length: 10 }, (_, i) => {
+                const yr = new Date().getFullYear() - 5 + i;
+                return (
+                  <option key={yr} value={yr}>
+                    {yr}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+        </div>
+        {/* Calendar Component */}
+        <div className="p-4">
+          <ScheduleCalendar courses={selectedSections} year={year} />
+        </div>
       </div>
     </div>
-  )
+  );
 }
