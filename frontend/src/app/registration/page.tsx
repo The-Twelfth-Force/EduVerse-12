@@ -15,6 +15,7 @@ import router from "next/dist/client/router";
 export default function Registration() {
   const [selectedSections, setSelectedSections] = useState<CourseSection[]>([]);
   const [year, setYear] = useState<number>(new Date().getFullYear());
+  const router = useRouter()
 
   const courseSections: CourseSection[] = [
     {
