@@ -58,15 +58,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               <span className="mt-1 text-xs font-light">Dashboard</span>
             </button>
           </li>
-          <li>
-            <button
-              onClick={() => router.push('/dashboard/courses')}
-              className={getButtonClasses('/dashboard/courses')}
-            >
-              <BookOpen size={30} />
-              <span className="mt-1 text-xs font-light">Courses</span>
-            </button>
-          </li>
+        
           <li>
             <button
               onClick={() => router.push('/dashboard/calendar')}
@@ -94,15 +86,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               <span className="mt-1 text-xs font-light">Inbox</span>
             </button>
           </li>
-          <li>
-            <button
-              onClick={() => router.push('/dashboard/history')}
-              className={getButtonClasses('/dashboard/history')}
-            >
-              <Clock size={30} />
-              <span className="mt-1 text-xs font-light">History</span>
-            </button>
-          </li>
+          
           <li>
             <button
               onClick={() => router.push('/dashboard/help')}
