@@ -94,7 +94,7 @@ export default function Registration() {
     },
   ];
 
-  
+
 
   const columns = (handleRowSelectionChange: (rowSelection: Row<CourseSection>, value: CheckedState) => void): ColumnDef<CourseSection>[] => [
     {
@@ -185,122 +185,122 @@ export default function Registration() {
   };
 
   return (
-  <div>
-  
-    <div className="flex flex-col h-full space-y-4 p-4">
-      {/* Filter Summary Section */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 border border-gray-200 rounded-md p-4 shadow-sm mb-4">
-        {/* Row 1 */}
-        <div className="flex items-center justify-between">
-          <div>
-            <span className="font-semibold text-sm">Course Status</span>
-            <div className="text-sm text-gray-700">Open Classes Only</div>
-          </div>
-          <Button variant="outline" className="text-sm px-3 py-1">Change</Button>
-        </div>
-        <div className="flex items-center justify-between">
-          <div>
-            <span className="font-semibold text-sm">Term</span>
-            <div className="text-sm text-gray-700">2025 Fall</div>
-          </div>
-          <Button variant="outline" className="text-sm px-3 py-1">Change</Button>
-        </div>
-
-        {/* Row 2 */}
-        <div className="flex items-center justify-between">
-          <div>
-            <span className="font-semibold text-sm">Locations</span>
-            <div className="text-sm text-gray-700">1 of 27 Selected</div>
-          </div>
-          <Button variant="outline" className="text-sm px-3 py-1">Change</Button>
-        </div>
-        <div className="flex items-center justify-between">
-          <div>
-            <span className="font-semibold text-sm">Sessions</span>
-            <div className="text-sm text-gray-700">All Sessions Selected</div>
-          </div>
-          <Button variant="outline" className="text-sm px-3 py-1">Change</Button>
-        </div>
-
-  {/* Row 3 */}
-  <div className="flex items-center justify-between">
     <div>
-      <span className="font-semibold text-sm">Academic Careers</span>
-      <div className="text-sm text-gray-700">All Academic Careers Selected</div>
-    </div>
-    <Button variant="outline" className="text-sm px-3 py-1">Change</Button>
-  </div>
-  <div className="flex items-center justify-between">
-    <div>
-      <span className="font-semibold text-sm">Instruction Modes</span>
-      <div className="text-sm text-gray-700">All Instruction Modes Selected</div>
-    </div>
-    <Button variant="outline" className="text-sm px-3 py-1">Change</Button>
-  </div>
-</div>
 
-    <div className="flex items-center justify-between w-full px-4 py-2 border-b border-gray-200">
-      <h1 className="text-xl font-semibold">Courses</h1>
-      <Button onClick={() => router.push('/registration/search')}
-      >Add Course</Button>
-    </div>
-
-      {/* Upper Section: Data Table with Add To Cart Button */}
-      <div className="flex flex-col w-full shadow rounded-md">
-        <div className="p-2 max-h-full overflow-scroll">
-          <DataTable columns={columns(handleRowSelectionChange)} data={courseSections} />
-        </div>
-        <Button
-          className="sticky w-auto m-2"
-          onClick={() => {
-            console.log(formattedSections);
-            localStorage.setItem("selectedSections", JSON.stringify(selectedSections));
-          }}
-          disabled={selectedSections.length === 0}
-        >
-          Add To Cart
-        </Button>
-      </div>
-
-      {/* Lower Section: Calendar */}
-      <div className="relative border border-gray-200 rounded-md w-full overflow-hidden shadow-md">
-        {/* Calendar Header with Controls */}
-        <div className="p-4 flex flex-col md:flex-row md:items-center md:justify-between bg-gray-900 text-white">
-          <div className="flex space-x-4 mb-4 md:mb-0">
-            <Button
-              onClick={handleAddEventButton}
-              className="px-4 py-2 rounded bg-gray-900 text-white hover:bg-teal-200 hover:text-gray-900 transition-colors"
-            >
-              Add Event
-            </Button>
+      <div className="flex flex-col h-full space-y-4 p-4">
+        {/* Filter Summary Section */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 border border-gray-200 rounded-md p-4 shadow-sm mb-4">
+          {/* Row 1 */}
+          <div className="flex items-center justify-between">
+            <div>
+              <span className="font-semibold text-sm">Course Status</span>
+              <div className="text-sm text-gray-700">Open Classes Only</div>
+            </div>
+            <Button variant="outline" className="text-sm px-3 py-1">Change</Button>
           </div>
-          <div className="flex items-center space-x-2">
-            <label htmlFor="year" className="text-sm">
-              Year:
-            </label>
-            <select
-              id="year"
-              value={year}
-              onChange={handleYearChange}
-              className="px-2 py-1 rounded bg-gray-900 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-200"
-            >
-              {Array.from({ length: 10 }, (_, i) => {
-                const yr = new Date().getFullYear() - 5 + i;
-                return (
-                  <option key={yr} value={yr}>
-                    {yr}
-                  </option>
-                );
-              })}
-            </select>
+          <div className="flex items-center justify-between">
+            <div>
+              <span className="font-semibold text-sm">Term</span>
+              <div className="text-sm text-gray-700">2025 Fall</div>
+            </div>
+            <Button variant="outline" className="text-sm px-3 py-1">Change</Button>
+          </div>
+
+          {/* Row 2 */}
+          <div className="flex items-center justify-between">
+            <div>
+              <span className="font-semibold text-sm">Locations</span>
+              <div className="text-sm text-gray-700">1 of 27 Selected</div>
+            </div>
+            <Button variant="outline" className="text-sm px-3 py-1">Change</Button>
+          </div>
+          <div className="flex items-center justify-between">
+            <div>
+              <span className="font-semibold text-sm">Sessions</span>
+              <div className="text-sm text-gray-700">All Sessions Selected</div>
+            </div>
+            <Button variant="outline" className="text-sm px-3 py-1">Change</Button>
+          </div>
+
+          {/* Row 3 */}
+          <div className="flex items-center justify-between">
+            <div>
+              <span className="font-semibold text-sm">Academic Careers</span>
+              <div className="text-sm text-gray-700">All Academic Careers Selected</div>
+            </div>
+            <Button variant="outline" className="text-sm px-3 py-1">Change</Button>
+          </div>
+          <div className="flex items-center justify-between">
+            <div>
+              <span className="font-semibold text-sm">Instruction Modes</span>
+              <div className="text-sm text-gray-700">All Instruction Modes Selected</div>
+            </div>
+            <Button variant="outline" className="text-sm px-3 py-1">Change</Button>
           </div>
         </div>
-        {/* Calendar Component */}
-        <div className="p-4">
-          <ScheduleCalendar courses={selectedSections} year={year} />
+
+        <div className="flex items-center justify-between w-full px-4 py-2 border-b border-gray-200">
+          <h1 className="text-xl font-semibold">Courses</h1>
+          <Button onClick={() => router.push('/registration/search')}
+          >Add Course</Button>
+        </div>
+
+        {/* Upper Section: Data Table with Add To Cart Button */}
+        <div className="flex flex-col w-full shadow rounded-md">
+          <div className="p-2 max-h-full overflow-scroll">
+            <DataTable columns={columns(handleRowSelectionChange)} data={courseSections} />
+          </div>
+          <Button
+            className="sticky w-auto m-2"
+            onClick={() => {
+              console.log(formattedSections);
+              localStorage.setItem("selectedSections", JSON.stringify(selectedSections));
+            }}
+            disabled={selectedSections.length === 0}
+          >
+            Add To Cart
+          </Button>
+        </div>
+
+        {/* Lower Section: Calendar */}
+        <div className="relative border border-gray-200 rounded-md w-full overflow-hidden shadow-md">
+          {/* Calendar Header with Controls */}
+          <div className="p-4 flex flex-col md:flex-row md:items-center md:justify-between bg-gray-900 text-white">
+            <div className="flex space-x-4 mb-4 md:mb-0">
+              <Button
+                onClick={handleAddEventButton}
+                className="px-4 py-2 rounded bg-gray-900 text-white hover:bg-teal-200 hover:text-gray-900 transition-colors"
+              >
+                Add Event
+              </Button>
+            </div>
+            <div className="flex items-center space-x-2">
+              <label htmlFor="year" className="text-sm">
+                Year:
+              </label>
+              <select
+                id="year"
+                value={year}
+                onChange={handleYearChange}
+                className="px-2 py-1 rounded bg-gray-900 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-200"
+              >
+                {Array.from({ length: 10 }, (_, i) => {
+                  const yr = new Date().getFullYear() - 5 + i;
+                  return (
+                    <option key={yr} value={yr}>
+                      {yr}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+          </div>
+          {/* Calendar Component */}
+          <div className="p-4">
+            <ScheduleCalendar courses={selectedSections} year={year} />
+          </div>
         </div>
       </div>
-    </div>
     </div>
   );
 }
