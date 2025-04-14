@@ -127,21 +127,21 @@ export default function CourseFinderPage() {
           {/* Search Button */}
           <div className="pt-4 flex justify-center">
             <Button
-                onClick={handleSearch}
-                className="bg-gray-900 text-white hover:bg-teal-200 hover:text-black px-4 py-1.5 text-sm rounded"
-                disabled={
-                    !semester &&
-                    !subject &&
-                    !courseNumber &&
-                    !meetingTime &&
-                    !meetingDays &&
-                    !status
-                  }
-                  
+              onClick={handleSearch}
+              className="bg-gray-900 text-white hover:bg-teal-200 hover:text-black px-4 py-1.5 text-sm rounded"
+              disabled={
+                !semester &&
+                !subject &&
+                !courseNumber &&
+                !meetingTime &&
+                !meetingDays &&
+                !status
+              }
+
             >
-                🔍 Search
+              🔍 Search
             </Button>
-            </div>
+          </div>
 
         </div>
       </div>

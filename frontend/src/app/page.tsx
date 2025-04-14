@@ -10,6 +10,7 @@ export default function Home() {
   const Router = useRouter();
   const { isLoaded, user, isSignedIn } = useUser();
   const userType = user?.publicMetadata.userType;
+  const userName = user?.firstName;
 
   // Local state to control the fade-in animation for the illustration
   const [showImage, setShowImage] = useState(false);
@@ -105,10 +106,8 @@ export default function Home() {
 
         <p className="mt-4 text-xl leading-tight tracking-wide text-gray-900">
           <span className="font-normal">Welcome back, </span>
-          <span className="font-bold">Mohammad</span>
+          <span className="font-bold">{userName}</span>
         </p>
-
-
 
         {/* Two big "glass effect" boxes */}
         <div className="mt-20 w-full max-w-6xl px-6 flex flex-row items-center justify-evenly">

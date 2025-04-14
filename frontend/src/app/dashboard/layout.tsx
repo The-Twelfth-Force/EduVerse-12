@@ -1,6 +1,6 @@
 'use client';
 
-import { useUser, UserButton } from '@clerk/nextjs';
+import { UserButton } from '@clerk/nextjs';
 import { useRouter, usePathname } from 'next/navigation';
 import {
   LayoutDashboard,
@@ -16,8 +16,6 @@ import {
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
-  const { user } = useUser();
-  const userName = user?.firstName || 'Guest';
 
   // This helper function returns the appropriate classes for a nav button.
   const getButtonClasses = (targetPath: string) => {
