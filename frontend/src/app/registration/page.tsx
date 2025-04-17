@@ -516,7 +516,7 @@ export default function Registration() {
             <DataTable columns={columns(handleRowSelectionChange)} data={courseSections} />
           </div>
           <Button className="sticky w-auto m-2" onClick={() => console.log(formattedSections)} disabled={selectedSections.length === 0}>
-            Register
+            Add to Cart
           </Button>
         </div>
       </div>
