@@ -41,6 +41,7 @@ import { Input } from "@/components/ui/input";
 const formSchema = z.object({
   subject: z.string(),
   course: z.string(),
+  section: z.string(),
   professor: z.string()
 });
 
@@ -453,6 +454,30 @@ export default function Registration() {
                             </FormItem>
                           )}
                         />
+                        <FormField
+                          control={form.control}
+                          name="section"
+                          render={({ field }) => (
+                            <FormItem className="space-y-2 w-full">
+                              <FormLabel>Section</FormLabel>
+                              <Select onValueChange={field.onChange} value={field.value}>
+                                <FormControl>
+                                  <SelectTrigger>
+                                    <SelectValue placeholder="Select a section" />
+                                  </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                  {Array.from(new Set(courseSections.map(section => section.section_number))).map(section => (
+                                    <SelectItem key={section} value={section}>
+                                      {section}
+                                    </SelectItem>
+                                  ))}
+                                </SelectContent>
+                              </Select>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
                       </div>
                       <FormField
                         control={form.control}
@@ -478,7 +503,7 @@ export default function Registration() {
                           </FormItem>
                         )}
                       />
-                      <Button type="submit">Search</Button>
+                      <Button className="w-full" type="submit">Search</Button>
                     </form>
                   </Form>
                 </div>
