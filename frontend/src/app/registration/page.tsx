@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ColumnDef, Row } from "@tanstack/react-table";
 import { CourseSection } from "@/types/course";
 import { DataTable } from "@/components/DataTable";
@@ -8,12 +8,69 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { CheckedState } from "@radix-ui/react-checkbox";
 import ScheduleCalendar from "@/components/Planner/ScheduleCalendar";
 import { Button } from "@/components/ui/button";
-import { useRouter } from 'next/navigation';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+
+import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { Input } from "@/components/ui/input";
+
+
+
+const formSchema = z.object({
+  subject: z.string(),
+  course: z.string(),
+  professor: z.string()
+});
+
 
 export default function Registration() {
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      subject: "",
+      course: "",
+      professor: "",
+    },
+  })
+
+  const onSubmit = (data: z.infer<typeof formSchema>) => {
+    console.log("Form Data: ", data);
+    // Save to localStorage or perform any action
+  };
+
+  const [selectedTerm, setSelectedTerm] = useState<string>("");
+
+  useEffect(() => {
+    const stored = window.localStorage.getItem("selectedTerm");
+    if (stored) {
+      setSelectedTerm(stored);
+    } 
+  }
+  , []);
+
   const [selectedSections, setSelectedSections] = useState<CourseSection[]>([]);
-  const [year, setYear] = useState<number>(new Date().getFullYear());
-  const router = useRouter()
 
   const courseSections: CourseSection[] = [
     {
@@ -37,7 +94,7 @@ export default function Registration() {
     },
     {
       _id: "2",
-      prefix: "CS",
+      prefix: "PHYS",
       number: "102",
       section_number: "002",
       profFirst: "Jane",
@@ -56,7 +113,7 @@ export default function Registration() {
     },
     {
       _id: "3",
-      prefix: "CS",
+      prefix: "MUSI",
       number: "103",
       section_number: "003",
       profFirst: "Alice",
@@ -92,9 +149,159 @@ export default function Registration() {
         },
       ],
     },
+    {
+      _id: "5",
+      prefix: "ENGR",
+      number: "105",
+      section_number: "005",
+      profFirst: "Charlie",
+      profLast: "Davis",
+      meetings: [
+        {
+          meeting_days: ["Tuesday", "Thursday"],
+          start_time: "05:00 PM",
+          end_time: "06:30 PM",
+          location: {
+            building: "Engineering Hall",
+            room: "505",
+          },
+        },
+      ],
+    },
+    {
+      _id: "6",
+      prefix: "BIO",
+      number: "106",
+      section_number: "006",
+      profFirst: "David",
+      profLast: "Wilson",
+      meetings: [
+        {
+          meeting_days: ["Monday", "Wednesday"],
+          start_time: "07:00 PM",
+          end_time: "08:30 PM",
+          location: {
+            building: "Science Hall",
+            room: "606",
+          },
+        },
+      ],
+    },
+    {
+      _id: "7",
+      prefix: "CHEM",
+      number: "107",
+      section_number: "007",
+      profFirst: "Eve",
+      profLast: "Garcia",
+      meetings: [
+        {
+          meeting_days: ["Tuesday", "Thursday"],
+          start_time: "09:00 AM",
+          end_time: "10:30 AM",
+          location: {
+            building: "Math Hall",
+            room: "707",
+          },
+        },
+      ],
+    },
+    {
+      _id: "8",
+      prefix: "STAT",
+      number: "108",
+      section_number: "008",
+      profFirst: "Frank",
+      profLast: "Martinez",
+      meetings: [
+        {
+          meeting_days: ["Friday"],
+          start_time: "11:00 AM",
+          end_time: "12:30 PM",
+          location: {
+            building: "Arts Hall",
+            room: "808",
+          },
+        },
+      ],
+    },
+    {
+      _id: "9",
+      prefix: "HIST",
+      number: "109",
+      section_number: "009",
+      profFirst: "Grace",
+      profLast: "Hernandez",
+      meetings: [
+        {
+          meeting_days: ["Monday", "Wednesday"],
+          start_time: "01:00 PM",
+          end_time: "02:30 PM",
+          location: {
+            building: "Engineering Hall",
+            room: "909",
+          },
+        },
+      ],
+    },
+    {
+      _id: "10",
+      prefix: "PHIL",
+      number: "110",
+      section_number: "010",
+      profFirst: "Henry",
+      profLast: "Lopez",
+      meetings: [
+        {
+          meeting_days: ["Tuesday", "Thursday"],
+          start_time: "03:00 PM",
+          end_time: "04:30 PM",
+          location: {
+            building: "Science Hall",
+            room: "1010",
+          },
+        },
+      ],
+    },
+    {
+      _id: "11",
+      prefix: "ART",
+      number: "111",
+      section_number: "011",
+      profFirst: "Ivy",
+      profLast: "Gonzalez",
+      meetings: [
+        {
+          meeting_days: ["Friday"],
+          start_time: "05:00 PM",
+          end_time: "06:30 PM",
+          location: {
+            building: "Math Hall",
+            room: "1111",
+          },
+        },
+      ],
+    },
+    {
+      _id: "12",
+      prefix: "ECON",
+      number: "112",
+      section_number: "012",
+      profFirst: "Jack",
+      profLast: "Wilson",
+      meetings: [
+        {
+          meeting_days: ["Monday", "Wednesday"],
+          start_time: "07:00 PM",
+          end_time: "08:30 PM",
+          location: {
+            building: "Arts Hall",
+            room: "1212",
+          },
+        },
+      ],
+    },
   ];
-
-
 
   const columns = (handleRowSelectionChange: (rowSelection: Row<CourseSection>, value: CheckedState) => void): ColumnDef<CourseSection>[] => [
     {
@@ -174,131 +381,126 @@ export default function Registration() {
     },
   };
 
-  // Handle year selection change for the calendar section
-  const handleYearChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setYear(Number(e.target.value));
-  };
-
-  // Dummy handler for "Add Event" button – in a real app, you could open a dialog/modal
-  const handleAddEventButton = () => {
-    alert("Add Event functionality triggered.");
-  };
-
   return (
-    <div>
-
-      <div className="flex flex-col h-full space-y-4 p-4">
-        {/* Filter Summary Section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 border border-gray-200 rounded-md p-4 shadow-sm mb-4">
-          {/* Row 1 */}
-          <div className="flex items-center justify-between">
-            <div>
-              <span className="font-semibold text-sm">Course Status</span>
-              <div className="text-sm text-gray-700">Open Classes Only</div>
-            </div>
-            <Button variant="outline" className="text-sm px-3 py-1">Change</Button>
-          </div>
-          <div className="flex items-center justify-between">
-            <div>
-              <span className="font-semibold text-sm">Term</span>
-              <div className="text-sm text-gray-700">2025 Fall</div>
-            </div>
-            <Button variant="outline" className="text-sm px-3 py-1">Change</Button>
-          </div>
-
-          {/* Row 2 */}
-          <div className="flex items-center justify-between">
-            <div>
-              <span className="font-semibold text-sm">Locations</span>
-              <div className="text-sm text-gray-700">1 of 27 Selected</div>
-            </div>
-            <Button variant="outline" className="text-sm px-3 py-1">Change</Button>
-          </div>
-          <div className="flex items-center justify-between">
-            <div>
-              <span className="font-semibold text-sm">Sessions</span>
-              <div className="text-sm text-gray-700">All Sessions Selected</div>
-            </div>
-            <Button variant="outline" className="text-sm px-3 py-1">Change</Button>
-          </div>
-
-          {/* Row 3 */}
-          <div className="flex items-center justify-between">
-            <div>
-              <span className="font-semibold text-sm">Academic Careers</span>
-              <div className="text-sm text-gray-700">All Academic Careers Selected</div>
-            </div>
-            <Button variant="outline" className="text-sm px-3 py-1">Change</Button>
-          </div>
-          <div className="flex items-center justify-between">
-            <div>
-              <span className="font-semibold text-sm">Instruction Modes</span>
-              <div className="text-sm text-gray-700">All Instruction Modes Selected</div>
-            </div>
-            <Button variant="outline" className="text-sm px-3 py-1">Change</Button>
+    <div className="flex h-full space-x-4 p-4">
+      <div className="flex flex-col">
+        <div className="flex items-center">
+          <Input
+            type="text"
+            placeholder="Search courses, professors, etc."
+            className="w-full mr-4"
+          />
+          <div className="flex justify-start">
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button className="w-auto m-2">
+                  Filters
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Filters</DialogTitle>
+                </DialogHeader>
+                <div className="grid gap-4 py-4">
+                  <Form {...form}>
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                      <div className="flex w-full space-x-4">
+                        <FormField
+                          control={form.control}
+                          name="subject"
+                          render={({ field }) => (
+                            <FormItem className="space-y-2 w-full">
+                              <FormLabel>Subject</FormLabel>
+                              <Select onValueChange={field.onChange} value={field.value}>
+                                <FormControl>
+                                  <SelectTrigger>
+                                    <SelectValue placeholder="Select a subject" />
+                                  </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                  {Array.from(new Set(courseSections.map(section => section.prefix))).map(prefix => (
+                                    <SelectItem key={prefix} value={prefix}>
+                                      {prefix}
+                                    </SelectItem>
+                                  ))}
+                                </SelectContent>
+                              </Select>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="course"
+                          render={({ field }) => (
+                            <FormItem className="space-y-2 w-full">
+                              <FormLabel>Course</FormLabel>
+                              <Select onValueChange={field.onChange} value={field.value}>
+                                <FormControl>
+                                  <SelectTrigger>
+                                    <SelectValue placeholder="Select a course" />
+                                  </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                  {Array.from(new Set(courseSections.map(section => section.number))).map(number => (
+                                    <SelectItem key={number} value={number}>
+                                      {number}
+                                    </SelectItem>
+                                  ))}
+                                </SelectContent>
+                              </Select>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                      <FormField
+                        control={form.control}
+                        name="professor"
+                        render={({ field }) => (
+                          <FormItem className="space-y-2 w-full">
+                            <FormLabel>Professor</FormLabel>
+                            <Select onValueChange={field.onChange} value={field.value}>
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Select a professor" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                {Array.from(new Set(courseSections.map(section => section.profFirst + " " + section.profLast))).map(prof => (
+                                  <SelectItem key={prof} value={prof}>
+                                    {prof}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <Button type="submit">Search</Button>
+                    </form>
+                  </Form>
+                </div>
+              </DialogContent>
+            </Dialog>
           </div>
         </div>
-
-        <div className="flex items-center justify-between w-full px-4 py-2 border-b border-gray-200">
-          <h1 className="text-xl font-semibold">Courses</h1>
-          <Button onClick={() => router.push('/registration/search')}
-          >Add Course</Button>
-        </div>
-
-        {/* Upper Section: Data Table with Add To Cart Button */}
-        <div className="flex flex-col w-full shadow rounded-md">
-          <div className="p-2 max-h-full overflow-scroll">
+        <div className="flex flex-col w-full shadow rounded-md justify-between overflow-scroll">
+          <div className="p-2">
             <DataTable columns={columns(handleRowSelectionChange)} data={courseSections} />
           </div>
-          <Button
-            className="sticky w-auto m-2"
-            onClick={() => {
-              console.log(formattedSections);
-              localStorage.setItem("selectedSections", JSON.stringify(selectedSections));
-            }}
-            disabled={selectedSections.length === 0}
-          >
-            Add To Cart
+          <Button className="sticky w-auto m-2" onClick={() => console.log(formattedSections)} disabled={selectedSections.length === 0}>
+            Register
           </Button>
         </div>
-
-        {/* Lower Section: Calendar */}
-        <div className="relative border border-gray-200 rounded-md w-full overflow-hidden shadow-md">
-          {/* Calendar Header with Controls */}
-          <div className="p-4 flex flex-col md:flex-row md:items-center md:justify-between bg-gray-900 text-white">
-            <div className="flex space-x-4 mb-4 md:mb-0">
-              <Button
-                onClick={handleAddEventButton}
-                className="px-4 py-2 rounded bg-gray-900 text-white hover:bg-teal-200 hover:text-gray-900 transition-colors"
-              >
-                Add Event
-              </Button>
-            </div>
-            <div className="flex items-center space-x-2">
-              <label htmlFor="year" className="text-sm">
-                Year:
-              </label>
-              <select
-                id="year"
-                value={year}
-                onChange={handleYearChange}
-                className="px-2 py-1 rounded bg-gray-900 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-200"
-              >
-                {Array.from({ length: 10 }, (_, i) => {
-                  const yr = new Date().getFullYear() - 5 + i;
-                  return (
-                    <option key={yr} value={yr}>
-                      {yr}
-                    </option>
-                  );
-                })}
-              </select>
-            </div>
-          </div>
-          {/* Calendar Component */}
-          <div className="p-4">
-            <ScheduleCalendar courses={selectedSections} year={year} />
-          </div>
+      </div>
+      <div className="relative w-full overflow-hidden ">
+        <div className="font-semibold text-lg mb-4">
+          <p>{selectedTerm}</p>
+        </div>
+        <div className="border-gray-200 border-[1px] rounded-md shadow-sm">
+          <ScheduleCalendar courses={selectedSections}></ScheduleCalendar>
         </div>
       </div>
     </div>

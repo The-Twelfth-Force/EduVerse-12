@@ -90,7 +90,7 @@ export default function Home() {
       </header>
 
       {/* Main Profile Section: raised up */}
-      <main className="flex flex-col items-center justify-start mt-20">
+      <main className="flex flex-col items-center justify-start">
         {/* Large circular UserButton */}
         <div className="rounded-full w-36 h-36 bg-gradient-to-r from-[#d28efc] to-[#9ed8fe] shadow-xl backdrop-blur-sm flex items-center justify-center">
         <UserButton

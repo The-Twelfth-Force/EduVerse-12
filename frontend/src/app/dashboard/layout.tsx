@@ -4,10 +4,8 @@ import { UserButton } from '@clerk/nextjs';
 import { useRouter, usePathname } from 'next/navigation';
 import {
   LayoutDashboard,
-  BookOpen,
   CalendarDays,
   Inbox,
-  Clock,
   HelpCircle,
   ArrowLeftCircle,
   ClipboardList,
