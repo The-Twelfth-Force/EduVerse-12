@@ -14,7 +14,7 @@ header('Content-Type: application/json');
 
 
 // Include the database connection and user class
-require_once '../db.php';
+require_once '../db/db.php';
 require_once '../classes/user.php';
 
 
