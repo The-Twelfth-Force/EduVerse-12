@@ -51,6 +51,7 @@ if (isset($_POST['login'])) {
     if ($response && $response['success']) {
         $_SESSION['userID'] = $response['userID'];
         $_SESSION['schoolEmail'] = $response['schoolEmail'];
+        $_SESSION['role'] = $response['role']; // This keeps track of the role (student, professor)
         $loginSuccess = true;
     } else {
         echo "<h2>Login Failed</h2>";
@@ -80,11 +81,19 @@ if (isset($_POST['login'])) {
     </form>
 <?php else: ?>
     <h1>You're logged in as <?= htmlspecialchars($_SESSION['schoolEmail']) ?></h1>
+    <h2>Role: <?= htmlspecialchars($_SESSION['role']) ?></h2>  <!-- PRINITNG THE ROLE -->
     <h2>Login Successful ✅</h2>
 
+    <?php if ($_SESSION['role'] === 'Student'): ?>
     <form method="GET" action="test_register.php">
-        <button type="submit">Go to Registration Page</button>
+        <button type="submit">Go to Registration Page (Student)</button>
     </form>
+    <?php elseif ($_SESSION['role'] === 'Professor'): ?>
+        <form method="GET" action="test_professor_register.php">
+            <button type="submit">Go to Registration Page (Professor)</button>
+        </form>
+    <?php endif; ?>
+
 
     <form method="POST" action="test.php">
         <button type="submit" name="logout">Logout</button>

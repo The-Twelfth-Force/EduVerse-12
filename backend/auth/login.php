@@ -47,21 +47,63 @@ $password = trim($_POST['password']);
 $user = new User($pdo);
 
 if ($user->login($email, $password)) {
-    // Login successful
-    echo json_encode([
-        'success' => true,
-        'message' => 'Login successful.',
-        'userID' => $_SESSION['userID'],
-        'schoolEmail' => $_SESSION['schoolEmail']
-    ]);
+    try {
+        $stmt = $pdo->prepare("SELECT SSN FROM Person WHERE UserID = ?");
+        $stmt->execute([$_SESSION['userID']]);
+        $person = $stmt->fetch();
+
+        if ($person && !empty($person['SSN'])) {
+            $ssn = $person['SSN'];
+
+            // Default to Professor first
+            $role = 'Professor'; // assume professor
+
+            // Check Student
+            $stmt = $pdo->prepare("SELECT SSN FROM Student WHERE SSN = ?");
+            $stmt->execute([$ssn]);
+            if ($stmt->fetch()) {
+                $role = 'Student';
+            }
+
+            $_SESSION['role'] = $role;
+
+            // ✅ No need to check again
+            // ✅ No "Unknown" possibility now
+        } else {
+            http_response_code(403);
+            echo json_encode([
+                'success' => false,
+                'message' => 'SSN not found for user.'
+            ]);
+            exit();
+        }
+
+        // Login success
+        echo json_encode([
+            'success' => true,
+            'message' => 'Login successful.',
+            'userID' => $_SESSION['userID'],
+            'schoolEmail' => $_SESSION['schoolEmail'],
+            'role' => $_SESSION['role']
+        ]);
+    } catch (Exception $e) {
+        http_response_code(500);
+        echo json_encode([
+            'success' => false,
+            'message' => 'Error during role detection: ' . $e->getMessage()
+        ]);
+    }
 } else {
     // Login failed
-    http_response_code(401); // Unauthorized
+    http_response_code(401);
     echo json_encode([
         'success' => false,
         'message' => 'Invalid email or password.'
     ]);
 }
+
+
+
 
 ?>
 

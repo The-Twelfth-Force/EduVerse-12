@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Student Portal</title>
+    <title>Student Portal - Register</title>
 </head>
 <body>
 
-<h1>Student Portal (Live Search Mode)</h1>
+<h1>Student Portal - Register for Courses</h1>
 
-<input type="text" id="searchInput" placeholder="Search Courses..." autocomplete="off">
+<input type="text" id="searchInput" placeholder="Search Sections..." autocomplete="off">
 
 <br><br>
 
@@ -16,7 +16,7 @@
 
 <div id="searchResults"></div>
 
-<script src="../js/student_portal.js"></script>
+<script src="../js/student_portal.js?v=2"></script>
 
 </body>
 </html>

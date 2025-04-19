@@ -1,7 +1,7 @@
 <?php
 session_start();
-require_once '../db/db.php';
-require_once '../classes/Student.php';
+require_once '../../db/db.php';
+require_once '../../classes/Student.php';
 
 if (!isset($_SESSION['userID'])) {
     http_response_code(401);

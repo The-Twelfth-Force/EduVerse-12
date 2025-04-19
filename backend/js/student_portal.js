@@ -48,7 +48,7 @@ const StudentPortal = {
     },
 
     registerCourse: function(sectionID) {
-        fetch('../auth/student_api.php', {
+        fetch('../auth/student/student_api.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: `action=register&sectionId=${encodeURIComponent(sectionID)}`
@@ -67,7 +67,7 @@ const StudentPortal = {
     
 
     viewRegisteredCourses: function() {
-        fetch('../auth/student_api.php', {
+        fetch('../auth/student/student_api.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: 'action=viewRegistered'
@@ -108,7 +108,7 @@ const StudentPortal = {
 
     dropCourse: function(sectionID) {
         
-        fetch('../auth/student_api.php', {
+        fetch('../auth/student/student_api.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
             body: `action=drop&sectionId=${encodeURIComponent(sectionID)}`

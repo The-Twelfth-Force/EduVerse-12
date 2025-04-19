@@ -24,9 +24,16 @@ try {
     $student = new Student($pdo, $_SESSION['userID']);
     $courses = $student->searchCourses($searchTerm);
 
-    echo json_encode(['courses' => $courses]);
+    echo json_encode([
+        'success' => true,
+        'courses' => $courses
+    ]);
 } catch (Exception $e) {
     http_response_code(500);
-    echo json_encode(['error' => 'Server error', 'details' => $e->getMessage()]);
+    echo json_encode([
+        'success' => false,
+        'error' => 'Server error',
+        'details' => $e->getMessage()
+    ]);
 }
 ?>
