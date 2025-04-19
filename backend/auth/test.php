@@ -24,7 +24,6 @@ if (isset($_POST['logout'])) {
     exit();
 }
 
-
 // Handle login
 if (isset($_POST['login'])) {
     $email = $_POST['school_email'] ?? '';
@@ -58,9 +57,8 @@ if (isset($_POST['login'])) {
         echo "<p style='color: red;'>" . ($response['message'] ?? 'Unknown error') . "</p>";
     }
 }
-
-// Show login or logout view
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -68,10 +66,6 @@ if (isset($_POST['login'])) {
     <title>Test Login</title>
 </head>
 <body>
-
-<?php if (isset($_SESSION['userID'])): ?>
-    <h1>You're logged in as <?= htmlspecialchars($_SESSION['schoolEmail']) ?></h1>
-<?php endif; ?>
 
 <?php if (!isset($_SESSION['userID'])): ?>
     <form method="POST" action="test.php">
@@ -84,10 +78,13 @@ if (isset($_POST['login'])) {
 
         <button type="submit" name="login">Login</button>
     </form>
-<?php endif; ?>
-
-<?php if (isset($_SESSION['userID'])): ?>
+<?php else: ?>
+    <h1>You're logged in as <?= htmlspecialchars($_SESSION['schoolEmail']) ?></h1>
     <h2>Login Successful ✅</h2>
+
+    <form method="GET" action="test_register.php">
+        <button type="submit">Go to Registration Page</button>
+    </form>
 
     <form method="POST" action="test.php">
         <button type="submit" name="logout">Logout</button>
