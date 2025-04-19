@@ -91,7 +91,7 @@ const StudentPortal = {
         for (const course of courses) {
             html += `<tr>
                 <td>${course.SectionNum}</td>
-                <td>${course.Course_ID}</td>
+                <td><a href="test_student_dashboard.php?sectionId=${course.SectionID}">${course.Course_ID}</a></td>
                 <td>${course.Location}</td>
                 <td>${course.Date}</td>
                 <td>${course.F_Name} ${course.L_Name}</td>
