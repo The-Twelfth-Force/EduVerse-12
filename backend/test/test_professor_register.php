@@ -62,7 +62,7 @@ if (!isset($_SESSION['userID']) || $_SESSION['role'] !== 'Professor') {
 </div>
 
 
-<script src="../js/professor_portal.js"></script>
+<script src="../js/professor_portal.js?v=2"></script>
 
 <script>
 // Show modal

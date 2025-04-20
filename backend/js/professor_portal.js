@@ -112,12 +112,18 @@ const ProfessorPortal = {
     
         for (const section of sections) {
             html += `<tr>
-                <td>${section.SectionNum}</td>
-                <td>${section.Course_ID}</td>
-                <td>${section.Location}</td>
-                <td>${section.Date}</td>
-                <td><button onclick="ProfessorPortal.dropSection(${section.SectionID})">Remove</button></td>
-            </tr>`;
+            <td>${section.SectionNum}</td>
+            <td>
+                <a href="../test/test_professor_dashboard.php?sectionId=${section.SectionID}">
+            ${section.Course_ID}
+                </a>
+
+            </td>
+            <td>${section.Location}</td>
+            <td>${section.Date}</td>
+            <td><button onclick="ProfessorPortal.dropSection(${section.SectionID})">Remove</button></td>
+        </tr>`;
+
 
         }
     

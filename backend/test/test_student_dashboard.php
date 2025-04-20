@@ -19,10 +19,11 @@ if (!$sectionId) {
 // Load contents from database for this section
 try {
     $stmt = $pdo->prepare("
-        SELECT ContentID, Title, Description, UploadDate
-        FROM Content
-        WHERE SectionID = ?
-    ");
+    SELECT ContentID, Title, Description, UploadDate, ContentType
+    FROM Content
+    WHERE SectionID = ? AND (IsStudentUpload IS NULL OR IsStudentUpload = 0)
+");
+
     $stmt->execute([$sectionId]);
     $contents = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (Exception $e) {
@@ -35,16 +36,22 @@ $assignments = [];
 $projects = [];
 $quizzes = [];
 
+// Group contents by type (Assignment, Project, Quiz) based on ContentType column
+$assignments = [];
+$projects = [];
+$quizzes = [];
+
 foreach ($contents as $content) {
-    $title = strtolower($content['Title']);
-    if (strpos($title, 'assignment') !== false) {
+    $contentType = strtolower($content['ContentType']);
+    if ($contentType === 'assignment') {
         $assignments[] = $content;
-    } elseif (strpos($title, 'project') !== false) {
+    } elseif ($contentType === 'project') {
         $projects[] = $content;
-    } elseif (strpos($title, 'quiz') !== false || strpos($title, 'quizzes') !== false) {
+    } elseif ($contentType === 'quiz') {
         $quizzes[] = $content;
     }
 }
+
 ?>
 
 <!DOCTYPE html>
