@@ -105,24 +105,49 @@ const ProfessorPortal = {
             div.innerHTML = '<p>No sections assigned yet.</p>';
             return;
         }
-
+    
         let html = `<h2>My Sections</h2><table border="1"><thead><tr>
-            <th>SectionNum</th><th>Course_ID</th><th>Location</th><th>Date</th>
+            <th>SectionNum</th><th>Course_ID</th><th>Location</th><th>Date</th><th>Action</th>
         </tr></thead><tbody>`;
-
+    
         for (const section of sections) {
             html += `<tr>
                 <td>${section.SectionNum}</td>
                 <td>${section.Course_ID}</td>
                 <td>${section.Location}</td>
                 <td>${section.Date}</td>
+                <td><button onclick="ProfessorPortal.dropSection(${section.SectionID})">Remove</button></td>
             </tr>`;
-        }
 
+        }
+    
         html += '</tbody></table>';
         div.innerHTML = html;
     },
+    
 
+
+    // Fucntion to drop a section (professor)
+    dropSection: function(sectionID) {
+        fetch('../auth/professor/professor_api.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: `action=dropSection&sectionId=${encodeURIComponent(sectionID)}`
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                alert('Section dropped successfully.');
+                setTimeout(() => {
+                    this.viewMySections(); // ✅ Give browser time to update
+                }, 100);  // small delay
+            } else {
+                alert('Failed to drop section: ' + data.message);
+            }
+        })
+        .catch(err => console.error('Drop Section Error:', err));
+    },
+    
 
     // Function to create a new course or section
     // This function will be called when the user submits the form

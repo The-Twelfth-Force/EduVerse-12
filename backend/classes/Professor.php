@@ -39,7 +39,7 @@ class Professor extends User {
     // View sections that this professor teaches
     public function viewMySections() {
         $stmt = $this->pdo->prepare("
-            SELECT SectionNum, Course_ID, Location, Date
+            SELECT SectionID, SectionNum, Course_ID, Location, Date
             FROM Section
             WHERE ProfessorSSN = ?
         ");
@@ -51,5 +51,27 @@ class Professor extends User {
     public function getSSN() {
         return $this->professorSSN;
     }
+
+    // Drop a Section (professor no longer teaches this section)
+    public function dropSectionFromTeach($sectionID) {
+        error_log("Trying to drop SectionID: $sectionID for ProfessorSSN: $this->professorSSN");
+    
+        $stmt = $this->pdo->prepare("
+            DELETE FROM Section
+            WHERE SectionID = ? AND ProfessorSSN = ?
+        ");
+        $success = $stmt->execute([$sectionID, $this->professorSSN]);
+    
+        if (!$success) {
+            error_log('Failed to execute DELETE query.');
+        } else {
+            error_log('DELETE query executed.');
+        }
+    
+        return $success;
+    }
+    
+    
+    
 }
 ?>

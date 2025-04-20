@@ -37,6 +37,13 @@ try {
         $professor->addSectionToTeach($sectionId);
         echo json_encode(['success' => true, 'message' => 'Section added successfully.']);
 
+    } elseif ($action === 'dropSection') {
+        $sectionId = $_POST['sectionId'] ?? null;
+        if (!$sectionId) {
+            throw new Exception('Section ID missing.');
+        }
+        $professor->dropSectionFromTeach($sectionId);
+        echo json_encode(['success' => true, 'message' => 'Section dropped successfully.']);
     } else {
         // Default = createCourseOrSection if no action or unknown action
         // Validate fields
