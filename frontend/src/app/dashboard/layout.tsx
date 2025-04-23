@@ -3,7 +3,7 @@
 import { UserButton } from '@clerk/nextjs';
 import { useRouter, usePathname } from 'next/navigation';
 import {
-  LayoutDashboard,
+  BookOpen,
   CalendarDays,
   Inbox,
   HelpCircle,
@@ -47,14 +47,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <ul className="flex flex-col space-y-4 w-full px-2">
           <li>
             <button
-              onClick={() => router.push('/dashboard')}
-              className={getButtonClasses('/dashboard')}
+              onClick={() => router.push('/dashboard/courses')}
+              className={getButtonClasses('/dashboard/courses')}
             >
-              <LayoutDashboard size={30} />
-              <span className="mt-1 text-xs font-light">Dashboard</span>
+              <BookOpen size={30} />
+              <span className="mt-1 text-xs font-light">Courses</span>
             </button>
           </li>
-        
+
           <li>
             <button
               onClick={() => router.push('/dashboard/calendar')}
@@ -82,7 +82,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               <span className="mt-1 text-xs font-light">Inbox</span>
             </button>
           </li>
-          
+
           <li>
             <button
               onClick={() => router.push('/dashboard/help')}
