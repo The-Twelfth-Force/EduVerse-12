@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 export default function Home() {
   const Router = useRouter();
   const { isLoaded, user, isSignedIn } = useUser();
-  const userType = user?.publicMetadata.userType;
+  const userName = user?.firstName;
 
   // Local state to control the fade-in animation for the illustration
   const [showImage, setShowImage] = useState(false);
@@ -25,7 +25,7 @@ export default function Home() {
   // Loading State
   if (!isLoaded) {
     return (
-<div className="min-h-screen w-full bg-white flex flex-col items-center justify-center">
+      <div className="min-h-screen w-full bg-white flex flex-col items-center justify-center">
         <h1 className="text-3xl font-bold text-gray-800">Loading...</h1>
       </div>
     );
@@ -37,9 +37,8 @@ export default function Home() {
       <div className="min-h-screen w-full bg-gradient-to-r from-[#d1f4f9] via-[#e1e9ff] to-[#f0e4ff] flex flex-col items-center justify-start pt-24 px-4">
         {/* Fading in the illustration */}
         <div
-          className={`${
-            showImage ? 'animate-fadeInDown' : 'opacity-0'
-          } w-full max-w-md flex justify-center mb-6`}
+          className={`${showImage ? 'animate-fadeInDown' : 'opacity-0'
+            } w-full max-w-md flex justify-center mb-6`}
         >
           <Image
             src="/images/landing_image.png"
@@ -78,37 +77,35 @@ export default function Home() {
     );
   }
 
-   // Signed-in layout
-   return (
+  // Signed-in layout
+  return (
     <div className="min-h-screen w-full bg-gradient-to-r from-[#d1f4f9] via-[#e1e9ff] to-[#f0e4ff] flex flex-col">
       {/* Top-left "logo"-style title */}
       <header className="p-4">
-      <h1 className="text-2xl font-bold italic text-gray-800 uppercase tracking-wider pl-10">
-      EduVerse-12
+        <h1 className="text-2xl font-bold italic text-gray-800 uppercase tracking-wider pl-10">
+          EduVerse-12
         </h1>
       </header>
 
       {/* Main Profile Section: raised up */}
-      <main className="flex flex-col items-center justify-start mt-20">
+      <main className="flex flex-col items-center justify-start">
         {/* Large circular UserButton */}
         <div className="rounded-full w-36 h-36 bg-gradient-to-r from-[#d28efc] to-[#9ed8fe] shadow-xl backdrop-blur-sm flex items-center justify-center">
-        <UserButton
-          appearance={{
-            elements: {
-              // Adjust these or check Clerk docs for the exact sub-elements you can override
-              userButtonAvatarBox: "w-32 h-32",
-              userButtonTrigger: "w-32 h-32",
-            },
-          }}
-        />
+          <UserButton
+            appearance={{
+              elements: {
+                // Adjust these or check Clerk docs for the exact sub-elements you can override
+                userButtonAvatarBox: "w-32 h-32",
+                userButtonTrigger: "w-32 h-32",
+              },
+            }}
+          />
         </div>
 
         <p className="mt-4 text-xl leading-tight tracking-wide text-gray-900">
           <span className="font-normal">Welcome back, </span>
-          <span className="font-bold">Mohammad</span>
+          <span className="font-bold">{userName}</span>
         </p>
-
-
 
         {/* Two big "glass effect" boxes */}
         <div className="mt-20 w-full max-w-6xl px-6 flex flex-row items-center justify-evenly">
@@ -132,12 +129,7 @@ export default function Home() {
           {/* Dashboard Box */}
           <div
             className="group relative w-2/5 max-w-sm bg-white/30 backdrop-blur-md shadow-lg p-6 rounded-xl flex flex-col items-center cursor-pointer hover:scale-105 transition-transform"
-            onClick={() =>
-              userType === 'stu'
-                ? Router.push('/dashboard/student')
-                //I placed the dahsboard as the navigation push for the dashboard tab.
-                : Router.push('/dashboard')
-            }
+            onClick={() => Router.push('/dashboard/courses')}
           >
             <Image
               src="/images/dashboard.png"

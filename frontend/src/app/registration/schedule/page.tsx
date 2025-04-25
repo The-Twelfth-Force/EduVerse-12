@@ -91,8 +91,7 @@ export default function Schedule() {
           <p className="text-center p-4 text-gray-500">No registered classes.</p>
         )}
       </div>
-
-      <div className="border border-gray-200 rounded-md shadow overflow-clip">
+      <div className="h-full border border-gray-200 rounded-md shadow overflow-clip">
         <ScheduleCalendar courses={registeredClasses} />
       </div>
     </div>

@@ -1,13 +1,11 @@
 'use client';
 
-import { useUser, UserButton } from '@clerk/nextjs';
+import { UserButton } from '@clerk/nextjs';
 import { useRouter, usePathname } from 'next/navigation';
 import {
-  LayoutDashboard,
   BookOpen,
   CalendarDays,
   Inbox,
-  Clock,
   HelpCircle,
   ArrowLeftCircle,
   ClipboardList,
@@ -16,8 +14,6 @@ import {
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
-  const { user } = useUser();
-  const userName = user?.firstName || 'Guest';
 
   // This helper function returns the appropriate classes for a nav button.
   const getButtonClasses = (targetPath: string) => {
@@ -51,15 +47,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <ul className="flex flex-col space-y-4 w-full px-2">
           <li>
             <button
-              onClick={() => router.push('/dashboard')}
-              className={getButtonClasses('/dashboard')}
-            >
-              <LayoutDashboard size={30} />
-              <span className="mt-1 text-xs font-light">Dashboard</span>
-            </button>
-          </li>
-          <li>
-            <button
               onClick={() => router.push('/dashboard/courses')}
               className={getButtonClasses('/dashboard/courses')}
             >
@@ -67,6 +54,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               <span className="mt-1 text-xs font-light">Courses</span>
             </button>
           </li>
+
           <li>
             <button
               onClick={() => router.push('/dashboard/calendar')}
@@ -94,15 +82,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               <span className="mt-1 text-xs font-light">Inbox</span>
             </button>
           </li>
-          <li>
-            <button
-              onClick={() => router.push('/dashboard/history')}
-              className={getButtonClasses('/dashboard/history')}
-            >
-              <Clock size={30} />
-              <span className="mt-1 text-xs font-light">History</span>
-            </button>
-          </li>
+
           <li>
             <button
               onClick={() => router.push('/dashboard/help')}

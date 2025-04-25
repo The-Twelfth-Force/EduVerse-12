@@ -60,7 +60,7 @@ export default function RegistrationLayout({ children }: { children: React.React
         <div className="mt-auto p-2 w-full">
           <button
             onClick={() => router.push('/')}
-            className={`w-full flex flex-col items-center p-2 rounded transition-colors transition-transform hover:-translate-y-1 ${pathname === '/' ? 'text-teal-200' : 'hover:text-teal-200'}`}
+            className={`w-full flex flex-col items-center p-2 rounded transition-transform hover:-translate-y-1 ${pathname === '/' ? 'text-teal-200' : 'hover:text-teal-200'}`}
           >
             <ArrowLeftCircle size={24} />
             <span className="mt-1 text-xs font-light">Back</span>
