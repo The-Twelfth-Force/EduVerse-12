@@ -161,106 +161,113 @@ const testCourseInfo = [
 
 
 export function CourseDash({ courseId }: CourseDashProps) {
-    // Find the course with the given courseId
     const course = testCourseInfo.find(course => course._id === courseId);
     if (!course) {
-        return <div className="text-red-500">Course not found</div>;
+        return <div className="text-red-500 p-4">Course not found</div>;
     }
 
     return (
-        <div className="w-full mx-auto mt-8">
-            <div className="flex items-center justify-between mb-4">
-                <h2 className="text-2xl font-semibold">{course.course_name}</h2>
+        <div className="w-full mx-auto mt-8 px-4 max-w-4xl">
+            <div className="flex items-center justify-between mb-6">
+                <div>
+                    <h2 className="text-3xl font-bold">{course.course_name}</h2>
+                    <p className="text-gray-500">{course.prefix} {course.number} – Section {course.section_number}</p>
+                </div>
             </div>
+
             <Tabs defaultValue="info" className="w-full">
-                <TabsList className="border-b-2">
+                <TabsList className="bg-gray-900 border-b mb-6 space-x-20 text-white">
                     <TabsTrigger value="info">Info</TabsTrigger>
                     <TabsTrigger value="assignments">Assignments</TabsTrigger>
                     <TabsTrigger value="announcements">Announcements</TabsTrigger>
                     <TabsTrigger value="resources">Resources</TabsTrigger>
                     <TabsTrigger value="grades">Grades</TabsTrigger>
                 </TabsList>
+
                 <TabsContent value="info">
-                    <div className="p-4">
-                        <h3 className="text-lg font-semibold">Course Information</h3>
+                    <div className="space-y-4 text-sm text-gray-700">
+                        <div className="border border-gray-200 rounded-md shadow bg-white p-4">
                         <p>{course.description}</p>
-                        <h4 className="mt-4 text-md font-semibold">Instructor:</h4>
+                        </div>
+
+                        <div className="border border-gray-200 rounded-md shadow bg-white p-4">
+                        <h4 className="font-semibold mb-1 text-gray-800">Instructor</h4>
                         <p>{course.profFirst} {course.profLast}</p>
-                        <h4 className="mt-4 text-md font-semibold">Meeting Times:</h4>
+                        </div>
+
+                        <div className="border border-gray-200 rounded-md shadow bg-white p-4">
+                        <h4 className="font-semibold mb-2 text-gray-800">Meeting Times</h4>
                         {course.meetings.map((meeting, index) => (
-                            <div key={index}>
-                                <p>{meeting.meeting_days.join(", ")}</p>
-                                <p>{meeting.start_time} - {meeting.end_time}</p>
-                                <p>{meeting.location.building} {meeting.location.room}</p>
+                            <div key={index} className="pl-3 border-l border-gray-300 space-y-1 mb-2">
+                            <p>{meeting.meeting_days.join(", ")}</p>
+                            <p>{meeting.start_time} – {meeting.end_time}</p>
+                            <p>{meeting.location.building} {meeting.location.room}</p>
                             </div>
                         ))}
+                        </div>
                     </div>
                 </TabsContent>
+
+
                 <TabsContent value="assignments">
-                    <div className="p-4">
-                        <h3 className="text-lg font-semibold">Course Information</h3>
-                        <p>{course.description}</p>
-                        <h4 className="mt-4 text-md font-semibold">Instructor:</h4>
-                        <p>{course.profFirst} {course.profLast}</p>
-                        <h4 className="mt-4 text-md font-semibold">Meeting Times:</h4>
-                        {course.meetings.map((meeting, index) => (
-                            <div key={index}>
-                                <p>{meeting.meeting_days.join(", ")}</p>
-                                <p>{meeting.start_time} - {meeting.end_time}</p>
-                                <p>{meeting.location.building} {meeting.location.room}</p>
-                            </div>
+                    <div className="space-y-4 text-sm text-gray-700">
+                        {course.assignments.map((assignment, index) => (
+                        <div key={index} className="p-4 rounded-md border border-gray-200 bg-white shadow hover:bg-gray-50 transition">
+                            <p className="font-semibold text-gray-900">{assignment.title}</p>
+                            <p className="text-xs text-gray-500">Due: {assignment.dueDate}</p>
+                            <p className="mt-1">{assignment.description}</p>
+                            <span className="inline-block mt-2 text-xs font-medium bg-blue-100 text-blue-700 px-2 py-0.5 rounded">
+                            {assignment.status}
+                            </span>
+                        </div>
                         ))}
                     </div>
                 </TabsContent>
+
+
                 <TabsContent value="announcements">
-                    <div className="p-4">
-                        <h3 className="text-lg font-semibold">Course Information</h3>
-                        <p>{course.description}</p>
-                        <h4 className="mt-4 text-md font-semibold">Instructor:</h4>
-                        <p>{course.profFirst} {course.profLast}</p>
-                        <h4 className="mt-4 text-md font-semibold">Meeting Times:</h4>
-                        {course.meetings.map((meeting, index) => (
-                            <div key={index}>
-                                <p>{meeting.meeting_days.join(", ")}</p>
-                                <p>{meeting.start_time} - {meeting.end_time}</p>
-                                <p>{meeting.location.building} {meeting.location.room}</p>
-                            </div>
+                    <div className="space-y-4 text-sm text-muted-foreground">
+                        {course.announcements.map((announcement, index) => (
+                        <div key={index} className="p-4 rounded-md border bg-muted space-y-1">
+                            <p className="text-foreground font-medium">{announcement.title}</p>
+                            <p className="text-xs text-gray-500">{announcement.date}</p>
+                            <p>{announcement.content}</p>
+                        </div>
                         ))}
                     </div>
                 </TabsContent>
+
                 <TabsContent value="resources">
-                    <div className="p-4">
-                        <h3 className="text-lg font-semibold">Course Information</h3>
-                        <p>{course.description}</p>
-                        <h4 className="mt-4 text-md font-semibold">Instructor:</h4>
-                        <p>{course.profFirst} {course.profLast}</p>
-                        <h4 className="mt-4 text-md font-semibold">Meeting Times:</h4>
-                        {course.meetings.map((meeting, index) => (
-                            <div key={index}>
-                                <p>{meeting.meeting_days.join(", ")}</p>
-                                <p>{meeting.start_time} - {meeting.end_time}</p>
-                                <p>{meeting.location.building} {meeting.location.room}</p>
-                            </div>
+                    <div className="space-y-3 text-sm text-gray-700">
+                        {course.resources.map((resource, index) => (
+                        <div key={index} className="flex justify-between items-center p-4 rounded-md border border-gray-200 bg-white shadow hover:bg-gray-50 transition">
+                            <p className="font-medium text-gray-800">{resource.title}</p>
+                            <a
+                            href={resource.link}
+                            className="text-sm text-blue-600 underline"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            >
+                            View
+                            </a>
+                        </div>
                         ))}
                     </div>
                 </TabsContent>
+
+
+
                 <TabsContent value="grades">
-                    <div className="p-4">
-                        <h3 className="text-lg font-semibold">Course Information</h3>
-                        <p>{course.description}</p>
-                        <h4 className="mt-4 text-md font-semibold">Instructor:</h4>
-                        <p>{course.profFirst} {course.profLast}</p>
-                        <h4 className="mt-4 text-md font-semibold">Meeting Times:</h4>
-                        {course.meetings.map((meeting, index) => (
-                            <div key={index}>
-                                <p>{meeting.meeting_days.join(", ")}</p>
-                                <p>{meeting.start_time} - {meeting.end_time}</p>
-                                <p>{meeting.location.building} {meeting.location.room}</p>
+                    <div className="space-y-4 text-sm text-gray-700">
+                        {course.grades.map((grade, index) => (
+                            <div key={index} className="p-3 rounded-md border bg-green-50 shadow-sm flex justify-between items-center">
+                                <p className="font-medium">{grade.assignment}</p>
+                                <p className="text-green-800 font-semibold">{grade.score} / {grade.total}</p>
                             </div>
                         ))}
                     </div>
                 </TabsContent>
             </Tabs>
         </div>
-    )
+    );
 }
