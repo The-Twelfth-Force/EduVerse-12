@@ -37,14 +37,12 @@ import { useForm } from "react-hook-form"
 import { Input } from "@/components/ui/input";
 
 
-
 const formSchema = z.object({
   subject: z.string(),
   course: z.string(),
   section: z.string(),
   professor: z.string()
 });
-
 
 export default function Registration() {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -59,6 +57,11 @@ export default function Registration() {
   const onSubmit = (data: z.infer<typeof formSchema>) => {
     console.log("Form Data: ", data);
     // Save to localStorage or perform any action
+    window.localStorage.setItem("selectedTerm", data.subject);
+    window.localStorage.setItem("selectedCourse", data.course);
+    window.localStorage.setItem("selectedSection", data.section);
+    window.localStorage.setItem("selectedProfessor", data.professor);
+    
   };
 
   const [selectedTerm, setSelectedTerm] = useState<string>("");
@@ -73,236 +76,7 @@ export default function Registration() {
 
   const [selectedSections, setSelectedSections] = useState<CourseSection[]>([]);
 
-  const courseSections: CourseSection[] = [
-    {
-      _id: "1",
-      prefix: "CS",
-      number: "101",
-      section_number: "001",
-      profFirst: "John",
-      profLast: "Doe",
-      meetings: [
-        {
-          meeting_days: ["Monday", "Wednesday"],
-          start_time: "09:00 AM",
-          end_time: "10:30 AM",
-          location: {
-            building: "Science Hall",
-            room: "101",
-          },
-        },
-      ],
-    },
-    {
-      _id: "2",
-      prefix: "PHYS",
-      number: "102",
-      section_number: "002",
-      profFirst: "Jane",
-      profLast: "Smith",
-      meetings: [
-        {
-          meeting_days: ["Tuesday", "Thursday"],
-          start_time: "11:00 AM",
-          end_time: "12:30 PM",
-          location: {
-            building: "Engineering Hall",
-            room: "202",
-          },
-        },
-      ],
-    },
-    {
-      _id: "3",
-      prefix: "MUSI",
-      number: "103",
-      section_number: "003",
-      profFirst: "Alice",
-      profLast: "Johnson",
-      meetings: [
-        {
-          meeting_days: ["Friday"],
-          start_time: "01:00 PM",
-          end_time: "02:30 PM",
-          location: {
-            building: "Math Hall",
-            room: "303",
-          },
-        },
-      ],
-    },
-    {
-      _id: "4",
-      prefix: "CS",
-      number: "104",
-      section_number: "004",
-      profFirst: "Bob",
-      profLast: "Brown",
-      meetings: [
-        {
-          meeting_days: ["Monday", "Wednesday"],
-          start_time: "03:00 PM",
-          end_time: "04:30 PM",
-          location: {
-            building: "Arts Hall",
-            room: "404",
-          },
-        },
-      ],
-    },
-    {
-      _id: "5",
-      prefix: "ENGR",
-      number: "105",
-      section_number: "005",
-      profFirst: "Charlie",
-      profLast: "Davis",
-      meetings: [
-        {
-          meeting_days: ["Tuesday", "Thursday"],
-          start_time: "05:00 PM",
-          end_time: "06:30 PM",
-          location: {
-            building: "Engineering Hall",
-            room: "505",
-          },
-        },
-      ],
-    },
-    {
-      _id: "6",
-      prefix: "BIO",
-      number: "106",
-      section_number: "006",
-      profFirst: "David",
-      profLast: "Wilson",
-      meetings: [
-        {
-          meeting_days: ["Monday", "Wednesday"],
-          start_time: "07:00 PM",
-          end_time: "08:30 PM",
-          location: {
-            building: "Science Hall",
-            room: "606",
-          },
-        },
-      ],
-    },
-    {
-      _id: "7",
-      prefix: "CHEM",
-      number: "107",
-      section_number: "007",
-      profFirst: "Eve",
-      profLast: "Garcia",
-      meetings: [
-        {
-          meeting_days: ["Tuesday", "Thursday"],
-          start_time: "09:00 AM",
-          end_time: "10:30 AM",
-          location: {
-            building: "Math Hall",
-            room: "707",
-          },
-        },
-      ],
-    },
-    {
-      _id: "8",
-      prefix: "STAT",
-      number: "108",
-      section_number: "008",
-      profFirst: "Frank",
-      profLast: "Martinez",
-      meetings: [
-        {
-          meeting_days: ["Friday"],
-          start_time: "11:00 AM",
-          end_time: "12:30 PM",
-          location: {
-            building: "Arts Hall",
-            room: "808",
-          },
-        },
-      ],
-    },
-    {
-      _id: "9",
-      prefix: "HIST",
-      number: "109",
-      section_number: "009",
-      profFirst: "Grace",
-      profLast: "Hernandez",
-      meetings: [
-        {
-          meeting_days: ["Monday", "Wednesday"],
-          start_time: "01:00 PM",
-          end_time: "02:30 PM",
-          location: {
-            building: "Engineering Hall",
-            room: "909",
-          },
-        },
-      ],
-    },
-    {
-      _id: "10",
-      prefix: "PHIL",
-      number: "110",
-      section_number: "010",
-      profFirst: "Henry",
-      profLast: "Lopez",
-      meetings: [
-        {
-          meeting_days: ["Tuesday", "Thursday"],
-          start_time: "03:00 PM",
-          end_time: "04:30 PM",
-          location: {
-            building: "Science Hall",
-            room: "1010",
-          },
-        },
-      ],
-    },
-    {
-      _id: "11",
-      prefix: "ART",
-      number: "111",
-      section_number: "011",
-      profFirst: "Ivy",
-      profLast: "Gonzalez",
-      meetings: [
-        {
-          meeting_days: ["Friday"],
-          start_time: "05:00 PM",
-          end_time: "06:30 PM",
-          location: {
-            building: "Math Hall",
-            room: "1111",
-          },
-        },
-      ],
-    },
-    {
-      _id: "12",
-      prefix: "ECON",
-      number: "112",
-      section_number: "012",
-      profFirst: "Jack",
-      profLast: "Wilson",
-      meetings: [
-        {
-          meeting_days: ["Monday", "Wednesday"],
-          start_time: "07:00 PM",
-          end_time: "08:30 PM",
-          location: {
-            building: "Arts Hall",
-            room: "1212",
-          },
-        },
-      ],
-    },
-  ];
+  const courseSections: CourseSection[] = [];
 
   const columns = (handleRowSelectionChange: (rowSelection: Row<CourseSection>, value: CheckedState) => void): ColumnDef<CourseSection>[] => [
     {

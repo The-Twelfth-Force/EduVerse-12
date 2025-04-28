@@ -5,13 +5,16 @@ export type Course = {
     profFirst: string;
     profLast: string;
     section_number: string;
-}
+};
 
 export type CourseSection = {
     _id: string;
     prefix: string;
     number: string;
     section_number: string;
+    course_name: string;
+    term: string;
+    status: string;
     profFirst: string;
     profLast: string;
     meetings: {
@@ -23,4 +26,5 @@ export type CourseSection = {
             room: string;
         };
     }[];
+    imageUrl: string;
 };
