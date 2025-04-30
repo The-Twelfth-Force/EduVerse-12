@@ -76,7 +76,54 @@ export default function Registration() {
 
   const [selectedSections, setSelectedSections] = useState<CourseSection[]>([]);
 
-  const courseSections: CourseSection[] = [];
+  const courseSections: CourseSection[] = [
+    {
+      _id: '1',
+      prefix: 'CS',
+      number: '101',
+      section_number: '001',
+      course_name: 'Introduction to Computer Science',
+      term: 'S25',
+      status: 'Open',
+      profFirst: 'John',
+      profLast: 'Doe',
+      meetings: [
+        {
+          meeting_days: ['Monday', 'Wednesday'],
+          start_time: '10:00 AM',
+          end_time: '11:30 AM',
+          location: {
+            building: 'Engineering Building',
+            room: '101',
+          },
+        },
+      ],
+      imageUrl: '/images/landscape.jpg',
+    },
+    {
+      _id: '2',
+      prefix: 'CS',
+      number: '102',
+      section_number: '002',
+      course_name: 'Data Structures',
+      term: 'S25',
+      status: 'Open',
+      profFirst: 'Jane',
+      profLast: 'Smith',
+      meetings: [
+        {
+          meeting_days: ['Tuesday', 'Thursday'],
+          start_time: '1:00 PM',
+          end_time: '2:30 PM',
+          location: {
+            building: 'Science Building',
+            room: '202',
+          },
+        },
+      ],
+      imageUrl: '/images/landscape.jpg',
+    }
+  ];
 
   const columns = (handleRowSelectionChange: (rowSelection: Row<CourseSection>, value: CheckedState) => void): ColumnDef<CourseSection>[] => [
     {

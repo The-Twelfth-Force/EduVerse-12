@@ -176,7 +176,7 @@ export function CourseDash({ courseId }: CourseDashProps) {
             </div>
 
             <Tabs defaultValue="info" className="w-full">
-                <TabsList className="bg-gray-900 border-b mb-6 space-x-20 text-white">
+                <TabsList className="w-full bg-gray-900 border-b mb-6 space-x-20 text-white">
                     <TabsTrigger value="info">Info</TabsTrigger>
                     <TabsTrigger value="assignments">Assignments</TabsTrigger>
                     <TabsTrigger value="announcements">Announcements</TabsTrigger>
