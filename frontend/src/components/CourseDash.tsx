@@ -232,7 +232,37 @@ export function CourseDash({ courseId }: CourseDashProps) {
                                             Here you can find more details about the assignment.
                                         </SheetDescription>
                                     </SheetHeader>
-                                    <form className="space-y-4">
+                                    <form
+                                        className="space-y-4"
+                                        onSubmit={async (e) => {
+                                            e.preventDefault();
+                                            const form = e.currentTarget;
+                                            const fileInput = form.fileUpload as HTMLInputElement;
+                                            const titleInput = form.fileTitle as HTMLInputElement;
+
+                                            if (!fileInput.files || !titleInput.value) {
+                                                alert("Please provide a file and title.");
+                                                return;
+                                            }
+
+                                            const formData = new FormData();
+                                            formData.append("fileUpload", fileInput.files[0]);
+                                            formData.append("fileTitle", titleInput.value);
+
+                                            const res = await fetch("/api/uploadContent", {
+                                                method: "POST",
+                                                body: formData,
+                                            });
+
+                                            if (res.ok) {
+                                                const result = await res.json();
+                                                alert("Upload successful! File saved at: " + result.filePath);
+                                            } else {
+                                                alert("Upload failed.");
+                                            }
+                                        }}
+                                    >
+
                                         <div>
                                             <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="fileTitle">
                                                 File Title
