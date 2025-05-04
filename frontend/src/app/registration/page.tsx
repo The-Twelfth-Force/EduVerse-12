@@ -37,6 +37,7 @@ import { useForm } from "react-hook-form"
 import { Input } from "@/components/ui/input";
 
 import { FilterOptions } from "@/types/dbInteraction";
+import { Section } from "@/lib/dbSchema";
 
 const formSchema = z.object({
   subject: z.string(),
@@ -55,14 +56,39 @@ export default function Registration() {
     },
   })
 
-  const [courseSections, setCourseSections] = useState<CourseSection[]>([]);
-
   const onSubmit = (data: z.infer<typeof formSchema>) => {
     console.log("Form Data: ", data);
     // Handle form submission logic here
   };
 
+  function parseSections(data: Section[]): CourseSection[] {
+    return data.map((section) => ({
+      _id: section.SectionID,
+      prefix: section.Course_ID.split(" ")[0],
+      number: section.Course_ID.split(" ")[1],
+      section_number: section.SectionNum,
+      course_name: section.Course_ID,
+      term: "S25",
+      status: (section.S_Capacity > 0) ? "Open" : "Closed",
+      profFirst: section.Prof_First,
+      profLast: section.Prof_Last,
+      meetings: [
+        {
+          meeting_days: section.Meetings.split(" "),
+          start_time: section.start_time,
+          end_time: section.end_time,
+          location: {
+            building: section.Location.split(" ")[0],
+            room: section.Location.split(" ")[1],
+          },
+        },
+      ],
+      imageUrl: section.ImageUrl || "/images/landscape.jpg",
+    }));
+  }
+
   const [selectedTerm, setSelectedTerm] = useState<string>("");
+  const [courseSections, setCourseSections] = useState<CourseSection[]>([]);
 
   useEffect(() => {
     const stored = window.localStorage.getItem("selectedTerm");
@@ -136,9 +162,11 @@ export default function Registration() {
     console.log("Search Value: ", value);
     // Perform search logic here
     // Example: Fetch data from an API based on the search value
-    const response = await fetch(`/api/courseSections?search=${value}`);
+    const response = await fetch(`/api/getSections?q=${value}`);
     const data = await response.json();
-    setCourseSections(data);
+    console.log("Search Results: ", data);
+    const parsed = parseSections(data);
+    setCourseSections(parsed);
   }
 
   function handleRowSelectionChange(rowSelection: Row<CourseSection>, value: CheckedState) {

@@ -11,8 +11,8 @@ export async function GET(request: NextRequest) {
 
     try {
         const results = await query<Section[]>({
-            query: "SELECT * FROM Section WHERE Course_ID LIKE ? OR Subject LIKE ? OR S_Info LIKE ? OR Date LIKE ?",
-            values: ['%'+q+'%', '%'+q+'%', '%'+q+'%', '%'+q+'%'],
+            query: "SELECT * FROM Section WHERE Course_ID LIKE ? OR Subject LIKE ? OR S_Info LIKE ?",
+            values: ['%'+q+'%', '%'+q+'%', '%'+q+'%'],
         });
 
         return NextResponse.json(results);

@@ -51,7 +51,9 @@ export interface Section extends RowDataPacket {
     Location: string;
     S_Info: string;
     S_Capacity: number;
-    Date: string;
+    Meetings: string;
+    start_time: string;
+    end_time: string;
     ProfessorSSN: number;
 }
 
