@@ -130,10 +130,10 @@ export default function Registration() {
     },
     {
       accessorKey: "Course",
-      header: "Professor",
+      header: "Course",
       cell: ({ row }) => (
         <div>
-          {row.original.prefix} {row.original.number} {row.original.profFirst} {row.original.profLast}
+          {row.original.prefix} {row.original.number}
         </div>
       ),
     },

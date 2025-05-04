@@ -63,3 +63,13 @@ export interface Department extends RowDataPacket {
     Doffice: string;
 }
 
+export interface Content extends RowDataPacket {
+    ContentID: number;
+    SectionID: number;
+    Title: string;
+    Description: string;
+    FilePath: string;
+    UploadDate: Date;
+    ContentType: string;
+    isStudentUpload: boolean;
+}

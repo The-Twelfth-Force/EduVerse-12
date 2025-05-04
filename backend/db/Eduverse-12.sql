@@ -2703,11 +2703,14 @@ INSERT INTO `Registered` (`StudentSSN`, `SectionID`) VALUES
 CREATE TABLE `Section` (
   `SectionID` int(11) NOT NULL,
   `SectionNum` int(11) NOT NULL,
+  `Subject` varchar(10) NOT NULL,
   `Course_ID` varchar(10) NOT NULL,
   `Location` varchar(50) DEFAULT NULL,
   `S_Info` text DEFAULT NULL,
   `S_Capacity` int(11) NOT NULL DEFAULT 0,
-  `Date` varchar(50) NOT NULL,
+  `Meetings` varchar(50) DEFAULT NOT NULL,
+  `start_time` varchar(15) DEFAULT NOT NULL,
+  `start_time` varchar(15) DEFAULT NOT NULL,
   `ProfessorSSN` char(9) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -2715,8 +2718,8 @@ CREATE TABLE `Section` (
 -- Dumping data for table `Section`
 --
 
-INSERT INTO `Section` (`SectionID`, `SectionNum`, `Course_ID`, `Location`, `S_Info`, `S_Capacity`, `Date`, `ProfessorSSN`) VALUES
-(3, 1, 'CS 1111', 'GR 2.300', 'Just conducting a test on the add course function', 70, 'Fr 9:00-12:15 PM', '936088867');
+INSERT INTO `Section` (`SectionID`, `SectionNum`, `Subject`, `Course_ID`, `Location`, `S_Info`, `S_Capacity`, `Meetings`, `start_time`, `end_time`, `ProfessorSSN`) VALUES
+(3, 1, 'CS', 'CS 1111', 'GR 2.300', 'Just conducting a test on the add course function', 70, 'Mo We Fr', '9:00 AM', '10:15 AM', '936088867');
 
 -- --------------------------------------------------------
 

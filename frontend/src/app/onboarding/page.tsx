@@ -12,6 +12,30 @@ export default function OnboardingComponent() {
     const router = useRouter()
 
     const handleSubmit = async (formData: FormData) => {
+        const clerkID = user?.id
+        const School_Email = user?.emailAddresses[0]?.emailAddress
+        const Password = user?.id
+
+        try {
+            const res = await fetch('/api/saveUser', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ clerkID, School_Email, Password }),
+            })
+            const data = await res.json()
+            if (res.status === 201) {
+                console.log('User saved successfully:', data)
+            } else {
+                console.error('Error saving user:', data)
+                setError(data.error)
+            }
+        } catch (error) {
+            console.error('Error saving user:', error)
+            setError('Failed to save user')
+        }
+
         const res = await completeOnboarding(formData)
         if (res?.message) {
             // Reloads the user's data from the Clerk API
