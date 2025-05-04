@@ -36,6 +36,8 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { Input } from "@/components/ui/input";
 
+import { FilterOptions } from "@/types/dbInteraction";
+import { Section } from "@/lib/dbSchema";
 
 const formSchema = z.object({
   subject: z.string(),
@@ -56,27 +58,47 @@ export default function Registration() {
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
     console.log("Form Data: ", data);
-    // Save to localStorage or perform any action
-    window.localStorage.setItem("selectedTerm", data.subject);
-    window.localStorage.setItem("selectedCourse", data.course);
-    window.localStorage.setItem("selectedSection", data.section);
-    window.localStorage.setItem("selectedProfessor", data.professor);
-    
+    // Handle form submission logic here
   };
 
+  function parseSections(data: Section[]): CourseSection[] {
+    return data.map((section) => ({
+      _id: section.SectionID,
+      prefix: section.Course_ID.split(" ")[0],
+      number: section.Course_ID.split(" ")[1],
+      section_number: section.SectionNum,
+      course_name: section.Course_ID,
+      term: "S25",
+      status: (section.S_Capacity > 0) ? "Open" : "Closed",
+      profFirst: section.Prof_First,
+      profLast: section.Prof_Last,
+      meetings: [
+        {
+          meeting_days: section.Meetings.split(" "),
+          start_time: section.start_time,
+          end_time: section.end_time,
+          location: {
+            building: section.Location.split(" ")[0],
+            room: section.Location.split(" ")[1],
+          },
+        },
+      ],
+      imageUrl: section.ImageUrl || "/images/landscape.jpg",
+    }));
+  }
+
   const [selectedTerm, setSelectedTerm] = useState<string>("");
+  const [courseSections, setCourseSections] = useState<CourseSection[]>([]);
 
   useEffect(() => {
     const stored = window.localStorage.getItem("selectedTerm");
     if (stored) {
       setSelectedTerm(stored);
-    } 
+    }
   }
-  , []);
+    , []);
 
   const [selectedSections, setSelectedSections] = useState<CourseSection[]>([]);
-
-  const courseSections: CourseSection[] = [];
 
   const columns = (handleRowSelectionChange: (rowSelection: Row<CourseSection>, value: CheckedState) => void): ColumnDef<CourseSection>[] => [
     {
@@ -108,10 +130,10 @@ export default function Registration() {
     },
     {
       accessorKey: "Course",
-      header: "Professor",
+      header: "Course",
       cell: ({ row }) => (
         <div>
-          {row.original.prefix} {row.original.number} {row.original.profFirst} {row.original.profLast}
+          {row.original.prefix} {row.original.number}
         </div>
       ),
     },
@@ -135,6 +157,17 @@ export default function Registration() {
       cell: ({ row }) => <div>{row.original.meetings[0]?.end_time}</div>,
     },
   ];
+
+  async function handleTextSearch(value: string) {
+    console.log("Search Value: ", value);
+    // Perform search logic here
+    // Example: Fetch data from an API based on the search value
+    const response = await fetch(`/api/getSections?q=${value}`);
+    const data = await response.json();
+    console.log("Search Results: ", data);
+    const parsed = parseSections(data);
+    setCourseSections(parsed);
+  }
 
   function handleRowSelectionChange(rowSelection: Row<CourseSection>, value: CheckedState) {
     rowSelection.toggleSelected(!!value);
@@ -164,6 +197,12 @@ export default function Registration() {
             type="text"
             placeholder="Search courses, professors, etc."
             className="w-full mr-4"
+            onKeyDown={(e => {
+              if (e.key === "Enter") {
+                handleTextSearch(e.currentTarget.value);
+              }
+            }
+            )}
           />
           <div className="flex justify-start">
             <Dialog>
@@ -193,9 +232,9 @@ export default function Registration() {
                                   </SelectTrigger>
                                 </FormControl>
                                 <SelectContent>
-                                  {Array.from(new Set(courseSections.map(section => section.prefix))).map(prefix => (
-                                    <SelectItem key={prefix} value={prefix}>
-                                      {prefix}
+                                  {FilterOptions["subject"].map((option) => (
+                                    <SelectItem key={option.value} value={option.value}>
+                                      {option.label}
                                     </SelectItem>
                                   ))}
                                 </SelectContent>
@@ -217,9 +256,9 @@ export default function Registration() {
                                   </SelectTrigger>
                                 </FormControl>
                                 <SelectContent>
-                                  {Array.from(new Set(courseSections.map(section => section.number))).map(number => (
-                                    <SelectItem key={number} value={number}>
-                                      {number}
+                                  {FilterOptions["course"].map((option) => (
+                                    <SelectItem key={option.value} value={option.value}>
+                                      {option.label}
                                     </SelectItem>
                                   ))}
                                 </SelectContent>
@@ -241,9 +280,9 @@ export default function Registration() {
                                   </SelectTrigger>
                                 </FormControl>
                                 <SelectContent>
-                                  {Array.from(new Set(courseSections.map(section => section.section_number))).map(section => (
-                                    <SelectItem key={section} value={section}>
-                                      {section}
+                                  {FilterOptions["section"].map((option) => (
+                                    <SelectItem key={option.value} value={option.value}>
+                                      {option.label}
                                     </SelectItem>
                                   ))}
                                 </SelectContent>
@@ -266,9 +305,9 @@ export default function Registration() {
                                 </SelectTrigger>
                               </FormControl>
                               <SelectContent>
-                                {Array.from(new Set(courseSections.map(section => section.profFirst + " " + section.profLast))).map(prof => (
-                                  <SelectItem key={prof} value={prof}>
-                                    {prof}
+                                {FilterOptions["professor"].map((option) => (
+                                  <SelectItem key={option.value} value={option.value}>
+                                    {option.label}
                                   </SelectItem>
                                 ))}
                               </SelectContent>

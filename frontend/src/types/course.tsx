@@ -8,10 +8,10 @@ export type Course = {
 };
 
 export type CourseSection = {
-    _id: string;
+    _id: number;
     prefix: string;
     number: string;
-    section_number: string;
+    section_number: number;
     course_name: string;
     term: string;
     status: string;

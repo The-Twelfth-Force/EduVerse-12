@@ -11,7 +11,7 @@ export default function ScheduleCalendar({
   courses = [], 
   highlightToday = true
 }: ScheduleCalendarProps) {
-  const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const daysOfWeek = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
   const todayIndex = new Date().getDay()
   
   // Generate time slots from 8 AM to 10 PM

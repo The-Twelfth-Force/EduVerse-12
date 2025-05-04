@@ -6,6 +6,16 @@ import {
     TabsList,
     TabsTrigger,
 } from "@/components/ui/tabs"
+import {
+    Sheet,
+    SheetContent,
+    SheetDescription,
+    SheetHeader,
+    SheetTitle,
+    SheetTrigger,
+} from "@/components/ui/sheet"
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
 
 interface CourseDashProps {
     courseId: string;
@@ -176,87 +186,146 @@ export function CourseDash({ courseId }: CourseDashProps) {
             </div>
 
             <Tabs defaultValue="info" className="w-full">
-                <TabsList className="bg-gray-900 border-b mb-6 space-x-20 text-white">
+                <TabsList className="w-full bg-gray-900 border-b mb-6 space-x-20 text-white">
                     <TabsTrigger value="info">Info</TabsTrigger>
                     <TabsTrigger value="assignments">Assignments</TabsTrigger>
                     <TabsTrigger value="announcements">Announcements</TabsTrigger>
                     <TabsTrigger value="resources">Resources</TabsTrigger>
                     <TabsTrigger value="grades">Grades</TabsTrigger>
                 </TabsList>
-
                 <TabsContent value="info">
                     <div className="space-y-4 text-sm text-gray-700">
                         <div className="border border-gray-200 rounded-md shadow bg-white p-4">
-                        <p>{course.description}</p>
+                            <p>{course.description}</p>
                         </div>
 
                         <div className="border border-gray-200 rounded-md shadow bg-white p-4">
-                        <h4 className="font-semibold mb-1 text-gray-800">Instructor</h4>
-                        <p>{course.profFirst} {course.profLast}</p>
+                            <h4 className="font-semibold mb-1 text-gray-800">Instructor</h4>
+                            <p>{course.profFirst} {course.profLast}</p>
                         </div>
 
                         <div className="border border-gray-200 rounded-md shadow bg-white p-4">
-                        <h4 className="font-semibold mb-2 text-gray-800">Meeting Times</h4>
-                        {course.meetings.map((meeting, index) => (
-                            <div key={index} className="pl-3 border-l border-gray-300 space-y-1 mb-2">
-                            <p>{meeting.meeting_days.join(", ")}</p>
-                            <p>{meeting.start_time} – {meeting.end_time}</p>
-                            <p>{meeting.location.building} {meeting.location.room}</p>
-                            </div>
-                        ))}
+                            <h4 className="font-semibold mb-2 text-gray-800">Meeting Times</h4>
+                            {course.meetings.map((meeting, index) => (
+                                <div key={index} className="pl-3 border-l border-gray-300 space-y-1 mb-2">
+                                    <p>{meeting.meeting_days.join(", ")}</p>
+                                    <p>{meeting.start_time} – {meeting.end_time}</p>
+                                    <p>{meeting.location.building} {meeting.location.room}</p>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </TabsContent>
-
-
                 <TabsContent value="assignments">
-                    <div className="space-y-4 text-sm text-gray-700">
+                    <div className="flex flex-col space-y-4 text-sm text-gray-700 text-start">
                         {course.assignments.map((assignment, index) => (
-                        <div key={index} className="p-4 rounded-md border border-gray-200 bg-white shadow hover:bg-gray-50 transition">
-                            <p className="font-semibold text-gray-900">{assignment.title}</p>
-                            <p className="text-xs text-gray-500">Due: {assignment.dueDate}</p>
-                            <p className="mt-1">{assignment.description}</p>
-                            <span className="inline-block mt-2 text-xs font-medium bg-blue-100 text-blue-700 px-2 py-0.5 rounded">
-                            {assignment.status}
-                            </span>
-                        </div>
+                            <Sheet key={index}>
+                                <SheetTrigger className="p-4 text-start rounded-md border border-gray-200 bg-white shadow hover:bg-gray-50 transition">
+                                    <p className="font-semibold text-gray-900">{assignment.title}</p>
+                                    <p className="text-xs text-gray-500">Due: {assignment.dueDate}</p>
+                                    <p className="mt-1">{assignment.description}</p>
+                                </SheetTrigger>
+                                <SheetContent>
+                                    <SheetHeader>
+                                        <SheetTitle>Assignment Details</SheetTitle>
+                                        <SheetDescription>
+                                            Here you can find more details about the assignment.
+                                        </SheetDescription>
+                                    </SheetHeader>
+                                    <form
+                                        className="space-y-4"
+                                        onSubmit={async (e) => {
+                                            e.preventDefault();
+                                            const form = e.currentTarget;
+                                            const fileInput = form.fileUpload as HTMLInputElement;
+                                            const titleInput = form.fileTitle as HTMLInputElement;
+
+                                            if (!fileInput.files || !titleInput.value) {
+                                                alert("Please provide a file and title.");
+                                                return;
+                                            }
+
+                                            const formData = new FormData();
+                                            formData.append("fileUpload", fileInput.files[0]);
+                                            formData.append("fileTitle", titleInput.value);
+
+                                            const res = await fetch("/api/uploadContent", {
+                                                method: "POST",
+                                                body: formData,
+                                            });
+
+                                            if (res.ok) {
+                                                const result = await res.json();
+                                                alert("Upload successful! File saved at: " + result.filePath);
+                                            } else {
+                                                alert("Upload failed.");
+                                            }
+                                        }}
+                                    >
+
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="fileTitle">
+                                                File Title
+                                            </label>
+                                            <Input
+                                                type="text"
+                                                id="fileTitle"
+                                                name="fileTitle"
+                                                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring focus:border-blue-400"
+                                                placeholder="Enter file title"
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="fileUpload">
+                                                Upload File
+                                            </label>
+                                            <Input
+                                                type="file"
+                                                id="fileUpload"
+                                                name="fileUpload"
+                                                className="w-full"
+                                            />
+                                        </div>
+                                        <Button
+                                            type="submit"
+                                            className="w-full text-white py-2 rounded-md hover:bg-gray-700 transition"
+                                        >
+                                            Upload
+                                        </Button>
+                                    </form>
+                                </SheetContent>
+                            </Sheet>
                         ))}
                     </div>
                 </TabsContent>
-
-
                 <TabsContent value="announcements">
                     <div className="space-y-4 text-sm text-muted-foreground">
                         {course.announcements.map((announcement, index) => (
-                        <div key={index} className="p-4 rounded-md border bg-muted space-y-1">
-                            <p className="text-foreground font-medium">{announcement.title}</p>
-                            <p className="text-xs text-gray-500">{announcement.date}</p>
-                            <p>{announcement.content}</p>
-                        </div>
+                            <div key={index} className="p-4 rounded-md border bg-muted space-y-1">
+                                <p className="text-foreground font-medium">{announcement.title}</p>
+                                <p className="text-xs text-gray-500">{announcement.date}</p>
+                                <p>{announcement.content}</p>
+                            </div>
                         ))}
                     </div>
                 </TabsContent>
-
                 <TabsContent value="resources">
                     <div className="space-y-3 text-sm text-gray-700">
                         {course.resources.map((resource, index) => (
-                        <div key={index} className="flex justify-between items-center p-4 rounded-md border border-gray-200 bg-white shadow hover:bg-gray-50 transition">
-                            <p className="font-medium text-gray-800">{resource.title}</p>
-                            <a
-                            href={resource.link}
-                            className="text-sm text-blue-600 underline"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            >
-                            View
-                            </a>
-                        </div>
+                            <div key={index} className="flex justify-between items-center p-4 rounded-md border border-gray-200 bg-white shadow hover:bg-gray-50 transition">
+                                <p className="font-medium text-gray-800">{resource.title}</p>
+                                <a
+                                    href={resource.link}
+                                    className="text-sm text-blue-600 underline"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    View
+                                </a>
+                            </div>
                         ))}
                     </div>
                 </TabsContent>
-
-
-
                 <TabsContent value="grades">
                     <div className="space-y-4 text-sm text-gray-700">
                         {course.grades.map((grade, index) => (

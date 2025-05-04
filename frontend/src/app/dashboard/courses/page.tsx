@@ -8,10 +8,10 @@ import { CourseSection } from '@/types/course';
 
 const dummyCourses: CourseSection[] = [
   {
-    _id: '1',
+    _id: 1,
     prefix: 'CS',
     number: '101',
-    section_number: '001',
+    section_number: 1,
     course_name: 'Introduction to Computer Science',
     term: 'S25',
     status: 'Open',
@@ -31,10 +31,10 @@ const dummyCourses: CourseSection[] = [
     imageUrl: '/images/landscape.jpg',
   },
   {
-    _id: '2',
+    _id: 2,
     prefix: 'CS',
     number: '102',
-    section_number: '002',
+    section_number: 2,
     course_name: 'Data Structures',
     term: 'S25',
     status: 'Open',
@@ -76,7 +76,7 @@ export default function Dashboard() {
       course.number.toLowerCase().includes(searchQuery.toLowerCase());
 
     const matchesFilter = selectedFilter === 'All courses' ||
-      (selectedFilter === 'Favorites' && favorites.includes((course._id)));
+      (selectedFilter === 'Favorites' && favorites.includes(String(course._id)));
 
     return matchesSearch && matchesFilter;
   });
@@ -101,16 +101,12 @@ export default function Dashboard() {
     router.push(`/dashboard/courses/${courseId}/`);
   };
 
-  const prefetchCourse = (courseId: string) => {
-    router.prefetch(`/dashboard/courses/${courseId}/`);
-  };
-
   const CourseCard = ({ course }: { course: typeof dummyCourses[0] }) => (
     <div
       className="bg-white shadow rounded-lg overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
-      onClick={() => handleCardClick(course._id)}
+      onClick={() => handleCardClick(String(course._id))}
     >
-      <div onMouseEnter={() => prefetchCourse(course._id)}>
+      <div>
         <div className="relative h-40">
           <Image
             src={course.imageUrl}
@@ -122,11 +118,11 @@ export default function Dashboard() {
           <button
             onClick={e => {
               e.stopPropagation();
-              toggleFavorite(course._id);
+              toggleFavorite(String(course._id));
             }}
             className="absolute top-2 right-2 p-2 text-yellow-400 rounded-full hover:bg-teal-200 hover:text-gray-900"
           >
-            {favorites.includes(course._id) ? (
+            {favorites.includes(String(course._id)) ? (
               <FaStar className="w-5 h-5" />
             ) : (
               <FaRegStar className="w-5 h-5" />
